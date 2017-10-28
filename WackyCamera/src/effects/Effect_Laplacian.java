@@ -8,14 +8,19 @@ import util.Image;
 public class Effect_Laplacian implements Effect
 {
 
-	private static final int[] LAPLACIAN = {-1, -1, -1,
-											-1, 9, -1,
-											-1, -1, -1};
+	private static final int[] LAPLACIAN_SEPERATE =  {1, 1, 1,
+													  1, -8, 1,
+													  1, 1, 1 };
 
-	private static final int LAPLACIAN_SIZE = 9;
+	private static final int[] LAPLACIAN_JOINT = 	{-1, -1, -1,
+													 -1, 9, -1,
+													 -1, -1, -1 };
 
+	private static int[] LAPLACIAN;
 
-
+	public Effect_Laplacian(boolean addImage) {
+		LAPLACIAN = (addImage ? LAPLACIAN_JOINT : LAPLACIAN_SEPERATE);
+	}
 
 	@Override
 	public Image apply(Image img)
@@ -28,7 +33,6 @@ public class Effect_Laplacian implements Effect
 			for(int c = 1; c < img.width - 1; c++)
 			{
 				int count = 0;
-				int val = 0;
 
 				int[] rgb = new int[Color.COUNT];
 
@@ -37,7 +41,7 @@ public class Effect_Laplacian implements Effect
 					for (int dx = -1; dx <= 1; ++dx)
 					{
 						for(int i = 0; i < Color.COUNT; i++)
-							rgb[i] += LAPLACIAN[count]*Color.getColor(img.pixels[c + dx][r + dy], i);
+							rgb[i] += LAPLACIAN[count] * Color.getColor(img.pixels[c + dx][r + dy], i);
 						++count;
 					}
 				}

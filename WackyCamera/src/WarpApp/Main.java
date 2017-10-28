@@ -8,7 +8,7 @@ import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 
 import WarpApp.ImageWarper;
-
+import effects.Effect_Abberation;
 import effects.Effect_Blur;
 import effects.warps.CircleWarp;
 import effects.warps.Effect_Warp;
@@ -32,22 +32,10 @@ public class Main {
 
 		ImageWarper warper = new ImageWarper(scanner);
 
-
-
-		//warper.addEffect(new Effect_Warp(new CircleWarp(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1)));
-		//warper.addEffect(new Effect_Blur());
-
-		//warper.addEffect(new Effect_Blur());
-		//warper.addEffect(new Effect_Blur());
-		//warper.addEffect(new Effect_Blur());
-
-
-		warper.addEffect(new Effect_Grayscale());
+		warper.addEffect(new Effect_Blur());
 		warper.addEffect(new Effect_Step(32));
-		warper.addEffect(new Effect_Laplacian());
-
-
-
+		warper.addEffect(new Effect_Laplacian(true));
+		warper.addEffect(new Effect_Grayscale());
 
 		Webcam webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
