@@ -66,14 +66,41 @@ public class Warpy {
 
 	private void onTakeScreenshot() {
 		JDialog dialog = new JDialog();
+		dialog.setUndecorated(false);
+		
+		JPanel masterLayout = new JPanel();
+		masterLayout.setLayout(new BorderLayout());
+		
+		JPanel optionsLayout = new JPanel();
+		optionsLayout.setLayout(new FlowLayout());
+		
+		JButton saveScreenshot = new JButton("Save");
+		saveScreenshot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				saveScreenshot();
+			}
+		});
+		JButton dismiss = new JButton("Close");
+		dismiss.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dialog.dispose();
+			}
+		});
+		optionsLayout.add(saveScreenshot);
+		optionsLayout.add(dismiss);
+		
 		JLabel label = new JLabel( new ImageIcon() );
-		dialog.add(label);
+		
+		
+		masterLayout.add(optionsLayout, BorderLayout.NORTH);
+		masterLayout.add(label, BorderLayout.CENTER);
+		dialog.add(masterLayout);
 		dialog.pack();
 		dialog.setVisible(true);
 	}
 	
 	public void updateFeed(BufferedImage frame) {
-		
+		currentFrame = frame;
 	}
 	
 	private BufferedImage getDefaultFeed() {
@@ -83,6 +110,10 @@ public class Warpy {
 		g.clearRect(0,0, feedWidth, feedHeight);
 		currentFrame = dflt;
 		return dflt;
+	}
+	
+	private void saveScreenshot() {
+		
 	}
 
 }
