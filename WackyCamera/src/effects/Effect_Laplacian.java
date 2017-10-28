@@ -28,7 +28,6 @@ public class Effect_Laplacian implements Effect
 			for(int c = 1; c < img.width - 1; c++)
 			{
 				int count = 0;
-				int val = 0;
 
 				int[] rgb = new int[Color.COUNT];
 
