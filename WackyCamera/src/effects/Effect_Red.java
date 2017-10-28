@@ -2,7 +2,7 @@ package effects;
 
 import WarpApp.Image;
 
-public class Grayscale implements Effect
+public class Effect_Red implements Effect
 {
 
 	@Override
@@ -16,11 +16,9 @@ public class Grayscale implements Effect
 				int p = img.pixels[c][r];
 
 			    int red = (p>>16) & 0xff;
-			    int green = (p>>8) & 0xff;
-			    int blue = p & 0xff;
-			    int avg = (red+green+blue)/3;
 
-			    img.pixels[c][r] = (255<<24) | (avg<<16) | (avg<<8) | avg;
+
+			    img.pixels[c][r] =  (red<<16) | 0 | 0;
 
 			}
 		}
@@ -28,5 +26,4 @@ public class Grayscale implements Effect
 		return img;
 
 	}
-
 }

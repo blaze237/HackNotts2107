@@ -2,7 +2,7 @@ package effects;
 
 import WarpApp.Image;
 
-public class Blue implements Effect
+public class Effect_Blue implements Effect
 {
 	@Override
 	public Image apply(Image img)
@@ -15,9 +15,7 @@ public class Blue implements Effect
 				int p = img.pixels[c][r];
 			    int blue = p & 0xff;
 
-			    float boost = 1.3f;
 
-			    blue = (int) Math.min(255, blue*boost);
 
 			    img.pixels[c][r] =  0 | 0 | blue;
 

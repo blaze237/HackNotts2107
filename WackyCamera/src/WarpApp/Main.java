@@ -6,6 +6,10 @@ import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 
 import WarpApp.ImageWarper;
+import effects.Effect_Blue;
+import effects.Effect_Grayscale;
+import effects.Effect_Red;
+import effects.Effect_Sepia;
 
 public class Main {
 
@@ -14,6 +18,8 @@ public class Main {
 		ImageScanner scanner = ImageScanner.getInstance();
 
 		ImageWarper warper = new ImageWarper(scanner);
+
+		warper.addEffect(new Effect_Grayscale());
 
 		Webcam webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
