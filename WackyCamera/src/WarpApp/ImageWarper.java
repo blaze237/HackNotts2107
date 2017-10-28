@@ -39,12 +39,17 @@ public class ImageWarper  implements WebcamImageTransformer {
 	@Override
 	public BufferedImage transform(BufferedImage img)
 	{
+
 		return Sepia(img);
 	}
 
 	public static void main(String[] args) {
 		new ImageWarper();
 	}
+
+
+
+
 
 
 	private BufferedImage toGrayscale(BufferedImage img)
