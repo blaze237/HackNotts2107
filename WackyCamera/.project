@@ -3,6 +3,7 @@
 	<name>WackyCamera</name>
 	<comment></comment>
 	<projects>
+		<project>Warpy</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
