@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import WarpApp.ImageWarper;
 import modifiers.CircleModifier;
 import modifiers.Modifier;
 import modifiers.TestModifier;
@@ -49,7 +50,7 @@ public class Main {
 		}
 
 		//Apply the modifier
-		Modifier mod = new CircleModifier(width / 2, height / 2, Math.min(width, height) / 3);
+		Modifier mod = new CircleModifier(width / 2, height / 2, Math.min(width, height) / 5);
 		pixels = Interpolate.interpolate(pixels, width, height, mod);
 
 		//Update the image
