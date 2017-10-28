@@ -13,6 +13,8 @@ public class Point {
 	public static double dist2(Point p1, Point p2) { return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2.0); }
 	public static double dist(Point p1, Point p2) { return Math.sqrt(dist2(p1, p2)); }
 
+	public static UnitVec getVec(Point p1, Point p2) { return new UnitVec(p1.x - p2.x, p1.y - p2.y); }
+
 	public double x;
 	public double y;
 }
