@@ -20,7 +20,8 @@ public class Effect_Laplacian implements Effect
 	@Override
 	public Image apply(Image img)
 	{
-		int pixelCopy[][] = img.pixels;
+		int pixelCopy[][] = new int[img.width][img.height];
+
 
 		for(int r = 1; r < img.height - 1; r++)
 		{
@@ -29,21 +30,29 @@ public class Effect_Laplacian implements Effect
 				int count = 0;
 				int val = 0;
 
-				for (int dy = -1; dy <= 1; ++dy) {
+				int[] rgb = new int[Color.COUNT];
+
+				for (int dy = -1; dy <= 1; ++dy)
+				{
 					for (int dx = -1; dx <= 1; ++dx)
 					{
-						int colour = ((pixelCopy[c + dx][r + dy]) & 0xff);
-						colour = (colour/128)*128;
-						val += LAPLACIAN[count]*colour;
+						for(int i = 0; i < Color.COUNT; i++)
+							rgb[i] += LAPLACIAN[count]*Color.getColor(img.pixels[c + dx][r + dy], i);
 						++count;
 					}
 				}
 
-				val = Math.min(255, val);
-				img.pixels[c][r] = Color.makeColor(val, val, val);
+				for(int i = 0; i < Color.COUNT; i++)
+				{
+					rgb[i] = Math.min(255, rgb[i]);
+
+				}
+
+				pixelCopy[c][r] = Color.makeColor(rgb[Color.RED], rgb[Color.GREEN], rgb[Color.BLUE]);
 			}
 		}
 
+		img.pixels = pixelCopy;
 		return img;
 	}
 

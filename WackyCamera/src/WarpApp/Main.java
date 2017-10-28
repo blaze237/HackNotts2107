@@ -33,14 +33,17 @@ public class Main {
 		ImageWarper warper = new ImageWarper(scanner);
 
 
-		warper.addEffect(new Effect_Step(64));
+
 		//warper.addEffect(new Effect_Warp(new CircleWarp(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1)));
 		//warper.addEffect(new Effect_Blur());
 
 		//warper.addEffect(new Effect_Blur());
 		//warper.addEffect(new Effect_Blur());
 		//warper.addEffect(new Effect_Blur());
+
+
 		warper.addEffect(new Effect_Grayscale());
+		warper.addEffect(new Effect_Step(32));
 		warper.addEffect(new Effect_Laplacian());
 
 
