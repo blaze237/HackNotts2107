@@ -1,6 +1,7 @@
-package effects;
+package effects.simple;
 
-import WarpApp.Image;
+import effects.Effect;
+import util.Image;
 
 public class Effect_Green implements Effect
 {
