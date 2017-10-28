@@ -1,7 +1,7 @@
 import modifiers.Modifier;
 import util.Point;
 
-public class Interpolater {
+public class Interpolate {
 	static int[][] interpolate(int[][] pixels, int width, int height, Modifier mod) {
 		//Define new pixel array
 		int[][] newPixels = new int[width][height];
@@ -31,12 +31,13 @@ public class Interpolater {
 			    //Interp colours
 			    double x1 = ltc + (rtc - ltc) * dx;
 			    double x2 = lbc + (rbc - lbc) * dx;
-			    newPixels[x][y] = (int) (x1 + (x2 - x1) * dy);
+			    int color = (int) (x1 + (x2 - x1) * dy);
+			    newPixels[x][y] = (0xff << 24) | (color << 16) | (color << 8) | color;
 			}
 		}
 
 		return newPixels;
 	}
 
-	static int getColor(int[][] pixels, int x, int y) { return pixels[x][y] & 0xff; }
+	private static int getColor(int[][] pixels, int x, int y) { return pixels[x][y] & 0xff; }
 }

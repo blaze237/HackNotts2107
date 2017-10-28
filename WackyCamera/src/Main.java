@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import modifiers.Modifier;
+import modifiers.TestModifier;
+
 public class Main {
 
 	public static void main(String[] args)
@@ -43,6 +46,15 @@ public class Main {
 
 			}
 		}
+
+		//Apply the modifier
+		Modifier mod = new TestModifier();
+		pixels = Interpolate.interpolate(pixels, width, height, mod);
+
+		//Update the image
+		for (int y = 0; y < height; ++y)
+			for (int x = 0; x < width; ++x)
+				img.setRGB(x, y, pixels[x][y]);
 
 		try {
 		    // retrieve image
