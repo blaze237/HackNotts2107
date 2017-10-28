@@ -1,33 +1,18 @@
 package effects.simple;
 
-import effects.Effect;
-import util.Image;
+import effects.SimpleEffect;
+import util.Color;
 
-public class Effect_Grayscale implements Effect
+public class Effect_Grayscale extends SimpleEffect
 {
-
 	@Override
-	public Image apply(Image img)
-	{
+	protected int applyPerPixel(int x, int y, int color) {
+	    int red = Color.getColor(color, Color.RED);
+	    int green = Color.getColor(color, Color.GREEN);
+	    int blue = Color.getColor(color, Color.BLUE);
+	    int avg = (red+green+blue)/3;
 
-		for(int r = 0; r < img.height; r++)
-		{
-			for(int c = 0; c < img.width; c++)
-			{
-				int p = img.pixels[c][r];
-
-			    int red = (p>>16) & 0xff;
-			    int green = (p>>8) & 0xff;
-			    int blue = p & 0xff;
-			    int avg = (red+green+blue)/3;
-
-			    img.pixels[c][r] = (255<<24) | (avg<<16) | (avg<<8) | avg;
-
-			}
-		}
-
-		return img;
-
+	    return Color.makeColor(avg, avg, avg);
 	}
 
 }
