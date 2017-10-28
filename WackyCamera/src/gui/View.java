@@ -1,15 +1,12 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
@@ -44,6 +41,7 @@ public class View {
 
 	private Boolean isFeedLoaded = false;
 
+	private Webcam webcam;
 	private BufferedImage currentFrame;
 
 	private int feedWidth = 800;
@@ -76,7 +74,7 @@ public class View {
 
 
 
-		Webcam webcam = Webcam.getDefault();
+		webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
 		webcam.setImageTransformer(warper);
 		webcam.open();
@@ -144,6 +142,11 @@ public class View {
 	}
 
 	private void onTakeScreenshot() {
+		
+		BufferedImage im = webcam.getImage();
+		
+		
+		
 		JDialog dialog = new JDialog();
 		dialog.setResizable(false);
 
@@ -156,7 +159,7 @@ public class View {
 		JButton saveScreenshot = new JButton("Save");
 		saveScreenshot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScreenshotFileHandler.saveImage(currentFrame);
+				ScreenshotFileHandler.saveImage(im);
 				dialog.dispose();
 			}
 		});
@@ -169,7 +172,7 @@ public class View {
 		optionsLayout.add(saveScreenshot);
 		optionsLayout.add(dismiss);
 
-		JLabel label = new JLabel( new ImageIcon(currentFrame.getScaledInstance((int)(feedWidth*0.75), (int)(feedHeight*0.75), Image.SCALE_FAST)));
+		JLabel label = new JLabel( new ImageIcon(im.getScaledInstance((int)(im.getWidth()*0.75), (int)(im.getHeight()*0.75), Image.SCALE_FAST)));
 
 		masterLayout.add(label, BorderLayout.CENTER);
 		masterLayout.add(optionsLayout, BorderLayout.SOUTH);
