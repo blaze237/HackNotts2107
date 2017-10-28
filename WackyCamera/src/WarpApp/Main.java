@@ -9,19 +9,15 @@ import com.github.sarxos.webcam.WebcamResolution;
 
 import WarpApp.ImageWarper;
 
-
-import WarpApp.ImageWarper;
+import effects.Effect_Blur;
 import effects.warps.CircleWarp;
 import effects.warps.Effect_Warp;
 import effects.warps.WarpModifier;
 import effects.Effect_Blur;
 import effects.Effect_Laplacian;
 import effects.simple.Effect_Blue;
-import effects.simple.Effect_Flip_Horizontal;
-import effects.simple.Effect_Flip_Vertical;
+import effects.simple.Effect_Grayscale;
 import effects.simple.Effect_Green;
-import effects.simple.Effect_Greyscale;
-import effects.simple.Effect_Negative;
 import effects.simple.Effect_Red;
 import effects.simple.Effect_Sepia;
 
@@ -31,8 +27,12 @@ public class Main {
 	{
 		ImageScanner scanner = ImageScanner.getInstance();
 
+		Dimension camSize = WebcamResolution.VGA.getSize();
+
 		ImageWarper warper = new ImageWarper(scanner);
 
+		warper.addEffect(new Effect_Warp(new CircleWarp(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1)));
+		//warper.addEffect(new Effect_Blur());
 
 		//warper.addEffect(new Effect_Blur());
 		//warper.addEffect(new Effect_Blur());

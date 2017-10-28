@@ -1,28 +1,12 @@
 package effects.simple;
 
-import effects.Effect;
-import util.Image;
+import effects.SimpleEffect;
+import util.Color;
 
-public class Effect_Green implements Effect
+public class Effect_Green extends SimpleEffect
 {
 	@Override
-	public Image apply(Image img)
-	{
-
-		for(int r = 0; r < img.height; r++)
-		{
-			for(int c = 0; c < img.width; c++)
-			{
-				int p = img.pixels[c][r];
-
-				int green = (p>>8) & 0xff;
-
-			    img.pixels[c][r] =  green << 8;
-
-			}
-		}
-
-		return img;
-
+	protected int applyPerPixel(int x, int y, int color) {
+	    return Color.makeColor(0, Color.getColor(color, Color.GREEN), 0);
 	}
 }
