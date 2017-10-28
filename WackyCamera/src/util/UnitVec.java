@@ -29,7 +29,7 @@ public class UnitVec {
 
 	//Length getters
 	public double length2() { return Math.pow(dx, 2) + Math.pow(dy, 2);}
-	public double length() { return Math.sqrt(length()); }
+	public double length() { return Math.sqrt(length2()); }
 
 	//Private normalize
 	private void normalize() {

@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import util.Image;
+
 public class ImageScanner
 {
 

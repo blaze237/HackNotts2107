@@ -1,6 +1,6 @@
 package effects;
 
-import WarpApp.Image;
+import util.Image;
 
 public interface Effect
 {

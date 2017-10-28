@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.github.sarxos.webcam.WebcamImageTransformer;
 
 import effects.Effect;
+import util.Image;
 
 public class ImageWarper  implements WebcamImageTransformer {
 
