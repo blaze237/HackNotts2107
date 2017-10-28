@@ -22,37 +22,83 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+
+import WarpApp.ImageScanner;
+import WarpApp.ImageWarper;
+import effects.Effect_Abberation;
+import effects.Effect_Laplacian;
+import effects.simple.Effect_Grayscale;
+import effects.simple.Effect_Step;
+import effects.warps.CircleWarp;
+import effects.warps.Effect_Warp;
+import effects.warps.Tunnel_Modifier;
 import util.ScreenshotFileHandler;
 
 public class View {
 
 	private String effectOptions[] = {"Blur", "Wobble", "Dog"};
-	
+
 	private JComboBox effects;
 	private String currentEffect;
 	private JButton saveImage;
-	private ImagePanel feed;
-	
+	//private ImagePanel feed;
+
 	private Boolean isFeedLoaded = false;
-	
+
 	private BufferedImage currentFrame;
-	
+
 	private int feedWidth = 800;
 	private int feedHeight = 800;
 
 	public View() {}
 
 	public void InitGui() {
+
+		ImageScanner scanner = ImageScanner.getInstance();
+
+		Dimension camSize = WebcamResolution.VGA.getSize();
+
+		ImageWarper warper = new ImageWarper(scanner);
+
+
+
+
+		warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
+		//warper.addEffect(new Effect_Abberation());
+
+		//warper.addEffect(new Effect_Warp(new CircleWarp(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1)));
+		//warper.addEffect(new Effect_Blur());
+
+		//warper.addEffect(new Effect_Blur());
+		//warper.addEffect(new Effect_Blur());
+		//warper.addEffect(new Effect_Blur());
+
+
+
+
+
+
+
+		Webcam webcam = Webcam.getDefault();
+		webcam.setViewSize(WebcamResolution.VGA.getSize());
+		webcam.setImageTransformer(warper);
+		webcam.open();
+
+
+
 		JFrame window = new JFrame("Warpy");
 		window.setLayout(new BorderLayout());
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(false);
+		window.setResizable(true);
 
 		JPanel toolbar = new JPanel();
 		toolbar.setLayout(new FlowLayout());
 
 		String[] effectsList = effectOptions;
-		
+
 		effects = new JComboBox<>(effectsList);
 		currentEffect = effectOptions[0];
 		effects.addItemListener(new ItemListener() {
@@ -64,19 +110,13 @@ public class View {
 		});
 
 
-		feed = new ImagePanel(currentFrame, new Dimension(feedWidth, feedHeight));
-		currentFrame = feed.getFrame();
-		feed.setPreferredSize(new Dimension(feedWidth, feedHeight));
-		window.addComponentListener(new ComponentAdapter() {
-			public void componentResized(ComponentEvent evt) {
-				Component c = (Component)evt.getSource();
-				Dimension size = c.getSize();
-				feed = new ImagePanel(currentFrame, window.getSize());
-				currentFrame = feed.getFrame();
-				//feed.scaleFeed(window.getSize());
-			}
-		});
-		
+		WebcamPanel panel = new WebcamPanel(webcam);
+		panel.setFPSDisplayed(true);
+		panel.setFillArea(true);
+
+		window.add(panel);
+
+
 		saveImage = new JButton("Take Screenshot");
 		saveImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -87,7 +127,7 @@ public class View {
 		toolbar.add(effects);
 		toolbar.add(saveImage);
 		window.add(toolbar, BorderLayout.NORTH);
-		window.add(feed, BorderLayout.CENTER);
+		//window.add(feed, BorderLayout.CENTER);
 
 		window.pack();
 		window.setVisible(true);
@@ -96,7 +136,7 @@ public class View {
 	protected void onEffectSelected(String newSelection) {
 		if (newSelection == currentEffect)
 			return;
-			
+
 		for (int i = 0; i < effectOptions.length - 1; ++i) {
 			if (effectOptions[i] == newSelection) {
 				setEffect();
@@ -106,19 +146,19 @@ public class View {
 	}
 
 	private void setEffect() {
-	
+
 	}
 
 	private void onTakeScreenshot() {
 		JDialog dialog = new JDialog();
 		dialog.setResizable(false);
-		
+
 		JPanel masterLayout = new JPanel();
 		masterLayout.setLayout(new BorderLayout());
-		
+
 		JPanel optionsLayout = new JPanel();
 		optionsLayout.setLayout(new FlowLayout());
-		
+
 		JButton saveScreenshot = new JButton("Save");
 		saveScreenshot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,9 +174,9 @@ public class View {
 		});
 		optionsLayout.add(saveScreenshot);
 		optionsLayout.add(dismiss);
-		
+
 		JLabel label = new JLabel( new ImageIcon(currentFrame.getScaledInstance((int)(feedWidth*0.75), (int)(feedHeight*0.75), Image.SCALE_FAST)));
-		
+
 		masterLayout.add(label, BorderLayout.CENTER);
 		masterLayout.add(optionsLayout, BorderLayout.SOUTH);
 		dialog.add(masterLayout);
@@ -145,7 +185,7 @@ public class View {
 		dialog.pack();
 		dialog.setVisible(true);
 	}
-	
+
 	public void updateFeed(BufferedImage frame) {
 		currentFrame = frame;
 	}
