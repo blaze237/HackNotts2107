@@ -6,6 +6,6 @@ public class Point {
 		this.y = y;
 	}
 
-	double x;
-	double y;
+	public double x;
+	public double y;
 }
