@@ -1,3 +1,4 @@
+package WarpApp;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.io.File;
@@ -42,7 +43,7 @@ public class ImageScanner
 		return img;
 	}
 
-	public int[][] getPixels(BufferedImage img)
+	public Image getPixels(BufferedImage img)
 	{
 		int h = img.getHeight();
 		int w = img.getWidth();
@@ -59,7 +60,8 @@ public class ImageScanner
 			}
 		}
 
-		return pixels;
+		return new Image(pixels,w,h);
+
 	}
 
 
