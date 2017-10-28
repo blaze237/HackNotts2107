@@ -29,7 +29,7 @@ public class Sepia implements Effect
 			    green2 = (int) Math.min(255, green2*boost);
 			    blue2 = (int)Math.min(255, blue2*boost);
 
-			    img.pixels[c][r] =  p & 0xff000000 | (red2<<16) | (green2<<8) | blue2;
+			    img.pixels[c][r] =  (red2<<16) | (green2<<8) | blue2;
 			}
 		}
 

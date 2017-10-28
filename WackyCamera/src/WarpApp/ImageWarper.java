@@ -9,18 +9,21 @@ import com.github.sarxos.webcam.WebcamImageTransformer;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 
+import effects.Blue;
 import effects.Grayscale;
+import effects.Red;
+import effects.Sepia;
 
 public class ImageWarper  implements WebcamImageTransformer {
 
 
 	ImageScanner scanner;
-	Grayscale greyEffect;
+	Sepia greyEffect;
 
 	public ImageWarper(ImageScanner scanner) {
 
 		this.scanner = scanner;
-		greyEffect = new Grayscale();
+		greyEffect = new Sepia();
 
 	}
 
@@ -28,10 +31,10 @@ public class ImageWarper  implements WebcamImageTransformer {
 	public BufferedImage transform(BufferedImage img)
 	{
 
-		//return( toBuffImg(greyEffect.apply(scanner.getPixels(img))));
+		return( toBuffImg(greyEffect.apply(scanner.getPixels(img))));
 
 
-		return img;
+		//return img;
 		//return Sepia(img);
 	}
 
@@ -41,7 +44,7 @@ public class ImageWarper  implements WebcamImageTransformer {
 
 	private BufferedImage toBuffImg(Image img)
 	{
-		BufferedImage image = new BufferedImage(img.width,img.height, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage image = new BufferedImage(img.width,img.height, BufferedImage.TYPE_INT_RGB);
 
 		for(int r = 0; r < img.height; r++)
 		{
