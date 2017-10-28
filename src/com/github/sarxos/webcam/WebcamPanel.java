@@ -548,6 +548,10 @@ public class WebcamPanel extends JPanel implements WebcamListener, PropertyChang
 			}
 		}
 
+
+
+
+
 		/**
 		 * Perform single panel area update (repaint newly obtained image).
 		 */
@@ -563,6 +567,7 @@ public class WebcamPanel extends JPanel implements WebcamListener, PropertyChang
 			// get new image from webcam
 
 			BufferedImage tmp = webcam.getImage();
+
 			boolean repaint = true;
 
 			if (tmp != null) {
