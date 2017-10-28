@@ -8,13 +8,13 @@ import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 
 import WarpApp.ImageWarper;
-import effects.Effect_Abberation;
 import effects.Effect_Blur;
 import effects.warps.CircleWarp;
 import effects.warps.Effect_Warp;
 import effects.warps.WarpModifier;
 import effects.Effect_Blur;
 import effects.Effect_Laplacian;
+import effects.simple.Effect_Abberation;
 import effects.simple.Effect_Blue;
 import effects.simple.Effect_Grayscale;
 import effects.simple.Effect_Green;

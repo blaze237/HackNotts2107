@@ -12,6 +12,8 @@ public class Effect_Warp implements Effect {
 		this.mod = mod;
 	}
 
+
+
 	@Override
 	public Image apply(Image img) {
 		//Define new pixel array

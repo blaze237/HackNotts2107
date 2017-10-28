@@ -1,5 +1,6 @@
-package effects;
+package effects.simple;
 
+import effects.Effect;
 import util.Color;
 import util.Image;
 

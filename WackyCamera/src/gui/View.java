@@ -28,12 +28,14 @@ import com.github.sarxos.webcam.WebcamResolution;
 
 import WarpApp.ImageScanner;
 import WarpApp.ImageWarper;
-import effects.Effect_Abberation;
 import effects.Effect_Laplacian;
+import effects.simple.Effect_Abberation;
 import effects.simple.Effect_Grayscale;
 import effects.simple.Effect_Step;
 import effects.warps.CircleWarp;
 import effects.warps.Effect_Warp;
+import effects.warps.Mirror_Modifier;
+import effects.warps.Swirl_Modifier;
 import effects.warps.Tunnel_Modifier;
 import util.ScreenshotFileHandler;
 
@@ -65,8 +67,9 @@ public class View {
 
 
 
-
-		warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
+		warper.addEffect(new Effect_Warp( new Swirl_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1, 6)));
+		//warper.addEffect(new Effect_Warp(new Mirror_Modifier(camSize.width / 2, Mirror_Modifier.VERTICAL)));
+		//warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
 		//warper.addEffect(new Effect_Abberation());
 
 		//warper.addEffect(new Effect_Warp(new CircleWarp(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1)));
