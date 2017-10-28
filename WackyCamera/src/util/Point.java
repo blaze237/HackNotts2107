@@ -1,11 +1,11 @@
 package util;
 
 public class Point {
-	public Point(int x, int y) {
+	public Point(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	int x;
-	int y;
+	double x;
+	double y;
 }
