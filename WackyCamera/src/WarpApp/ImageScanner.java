@@ -56,9 +56,9 @@ public class ImageScanner
 
 		for(int r = 0; r < h; r++)
 		{
-			for(int c = 0; c < w; c++)
+			for(int c = 1; c <w; c++)
 			{
-				pixels[c][r] = (rast.getSample(c,r,0) << 16) | (rast.getSample(c,r,1) << 8) | rast.getSample(c,r,2);
+				pixels[w-c][r] = (rast.getSample(c,r,0) << 16) | (rast.getSample(c,r,1) << 8) | rast.getSample(c,r,2);
 			}
 		}
 
