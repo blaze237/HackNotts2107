@@ -67,10 +67,10 @@ public class View {
 
 
 
-		warper.addEffect(new Effect_Warp( new Swirl_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1, 6)));
+		//warper.addEffect(new Effect_Warp( new Swirl_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1, 6)));
 		//warper.addEffect(new Effect_Warp(new Mirror_Modifier(camSize.width / 2, Mirror_Modifier.VERTICAL)));
 		//warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
-		//warper.addEffect(new Effect_Abberation());
+		warper.addEffect(new Effect_Abberation(5,Effect_Abberation.ONE_WAY_ABBERATION));
 
 		//warper.addEffect(new Effect_Warp(new CircleWarp(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1)));
 		//warper.addEffect(new Effect_Blur());
