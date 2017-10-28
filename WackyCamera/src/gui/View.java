@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -22,9 +24,12 @@ import javax.swing.JPanel;
 
 import util.ScreenshotFileHandler;
 
-public class Warpy {
+public class View {
 
+	private String effectOptions[] = {"Blur", "Wobble", "Dog"};
+	
 	private JComboBox effects;
+	private String currentEffect;
 	private JButton saveImage;
 	private ImagePanel feed;
 	
@@ -35,19 +40,28 @@ public class Warpy {
 	private int feedWidth = 800;
 	private int feedHeight = 800;
 
-	public Warpy() {}
+	public View() {}
 
 	public void InitGui() {
 		JFrame window = new JFrame("Warpy");
 		window.setLayout(new BorderLayout());
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(true);
+		window.setResizable(false);
 
 		JPanel toolbar = new JPanel();
 		toolbar.setLayout(new FlowLayout());
 
-		String[] effectsList = new String[] {"Blur", "Wobble", "Dog"};
+		String[] effectsList = effectOptions;
+		
 		effects = new JComboBox<>(effectsList);
+		currentEffect = effectOptions[0];
+		effects.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					onEffectSelected((String)effects.getSelectedItem());
+				}
+			}
+		});
 
 
 		feed = new ImagePanel(currentFrame, new Dimension(feedWidth, feedHeight));
@@ -60,7 +74,6 @@ public class Warpy {
 				feed = new ImagePanel(currentFrame, window.getSize());
 				currentFrame = feed.getFrame();
 				//feed.scaleFeed(window.getSize());
-				
 			}
 		});
 		
@@ -80,6 +93,22 @@ public class Warpy {
 		window.setVisible(true);
 	}
 
+	protected void onEffectSelected(String newSelection) {
+		if (newSelection == currentEffect)
+			return;
+			
+		for (int i = 0; i < effectOptions.length - 1; ++i) {
+			if (effectOptions[i] == newSelection) {
+				setEffect();
+				break;
+			}
+		}
+	}
+
+	private void setEffect() {
+	
+	}
+
 	private void onTakeScreenshot() {
 		JDialog dialog = new JDialog();
 		dialog.setResizable(false);
@@ -94,6 +123,7 @@ public class Warpy {
 		saveScreenshot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ScreenshotFileHandler.saveImage(currentFrame);
+				dialog.dispose();
 			}
 		});
 		JButton dismiss = new JButton("Close");
