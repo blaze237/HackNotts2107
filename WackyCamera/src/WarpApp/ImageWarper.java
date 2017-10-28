@@ -1,48 +1,50 @@
 package WarpApp;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
-import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamImageTransformer;
-import com.github.sarxos.webcam.WebcamPanel;
-import com.github.sarxos.webcam.WebcamResolution;
 
-import effects.Blue;
-import effects.Grayscale;
-import effects.Red;
-import effects.Sepia;
+import effects.Effect;
 
 public class ImageWarper  implements WebcamImageTransformer {
 
-
+	//Store instance of the scanner used to read from the webcam
 	ImageScanner scanner;
-	Sepia greyEffect;
+
+	//Store a list of effects
+	ArrayList<Effect> effects;
 
 	public ImageWarper(ImageScanner scanner) {
-
 		this.scanner = scanner;
-		greyEffect = new Sepia();
-
+		this.effects = new ArrayList<>();
 	}
 
 	@Override
 	public BufferedImage transform(BufferedImage img)
 	{
+		//Get image in our format
+		Image image = scanner.getPixels(img);
 
-		return( toBuffImg(greyEffect.apply(scanner.getPixels(img))));
+		//Apply all effects to the image
+		for (Effect e : effects)
+		{
+			image = e.apply(image);
+		}
 
-
-		//return img;
-		//return Sepia(img);
+		//Return their format
+		return toBuffImg(image);
 	}
 
+	public void addEffect(Effect e) {
+		effects.add(e);
+	}
 
+	public void removeEffect(Effect e) {
+		effects.remove(e);
+	}
 
-
-
-	private BufferedImage toBuffImg(Image img)
+	private static BufferedImage toBuffImg(Image img)
 	{
 		BufferedImage image = new BufferedImage(img.width,img.height, BufferedImage.TYPE_INT_RGB);
 
@@ -57,15 +59,4 @@ public class ImageWarper  implements WebcamImageTransformer {
 		return image;
 
 	}
-
-
-
-
-
-
-
-
-
-
-
 }
