@@ -31,6 +31,12 @@ public class UnitVec {
 	public double length2() { return Math.pow(dx, 2) + Math.pow(dy, 2);}
 	public double length() { return Math.sqrt(length2()); }
 
+	public UnitVec rotate(double angle) {
+		double cs = Math.cos(angle);
+		double sn = Math.sin(angle);
+		return new UnitVec(dx * cs - dy * sn, dx * sn + dy * cs);
+	}
+
 	//Private normalize
 	private void normalize() {
 		double dist = length();
