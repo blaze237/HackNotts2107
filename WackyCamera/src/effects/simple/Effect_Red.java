@@ -19,7 +19,7 @@ public class Effect_Red implements Effect
 			    int red = (p>>16) & 0xff;
 
 
-			    img.pixels[c][r] =  (red<<16) | 0 | 0;
+			    img.pixels[c][r] =  (red<<16);
 
 			}
 		}

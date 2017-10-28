@@ -3,7 +3,7 @@ package effects.simple;
 import effects.Effect;
 import util.Image;
 
-public class Effect_Grayscale implements Effect
+public class Effect_Greyscale implements Effect
 {
 
 	@Override
@@ -21,7 +21,7 @@ public class Effect_Grayscale implements Effect
 			    int blue = p & 0xff;
 			    int avg = (red+green+blue)/3;
 
-			    img.pixels[c][r] = (255<<24) | (avg<<16) | (avg<<8) | avg;
+			    img.pixels[c][r] = (avg<<16) | (avg<<8) | avg;
 
 			}
 		}

@@ -15,8 +15,13 @@ import effects.warps.CircleWarp;
 import effects.warps.Effect_Warp;
 import effects.warps.WarpModifier;
 import effects.Effect_Blur;
+import effects.Effect_Laplacian;
 import effects.simple.Effect_Blue;
-import effects.simple.Effect_Grayscale;
+import effects.simple.Effect_Flip_Horizontal;
+import effects.simple.Effect_Flip_Vertical;
+import effects.simple.Effect_Green;
+import effects.simple.Effect_Greyscale;
+import effects.simple.Effect_Negative;
 import effects.simple.Effect_Red;
 import effects.simple.Effect_Sepia;
 
@@ -28,7 +33,14 @@ public class Main {
 
 		ImageWarper warper = new ImageWarper(scanner);
 
-		warper.addEffect(new Effect_Blur());
+
+		//warper.addEffect(new Effect_Blur());
+		//warper.addEffect(new Effect_Blur());
+		//warper.addEffect(new Effect_Blur());
+		warper.addEffect(new Effect_Laplacian());
+
+
+
 
 		Webcam webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());

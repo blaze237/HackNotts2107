@@ -18,7 +18,7 @@ public class Effect_Blue implements Effect
 
 
 
-			    img.pixels[c][r] =  0 | 0 | blue;
+			    img.pixels[c][r] = blue;
 
 			}
 		}
