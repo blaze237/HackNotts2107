@@ -17,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import util.ScreenshotFileHandler;
+
 public class Warpy {
 
 	private JComboBox effects;
@@ -66,6 +68,7 @@ public class Warpy {
 
 	private void onTakeScreenshot() {
 		JDialog dialog = new JDialog();
+		dialog.setResizable(false);
 		dialog.setUndecorated(false);
 		
 		JPanel masterLayout = new JPanel();
@@ -77,7 +80,7 @@ public class Warpy {
 		JButton saveScreenshot = new JButton("Save");
 		saveScreenshot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				saveScreenshot();
+				ScreenshotFileHandler.saveImage(currentFrame);
 			}
 		});
 		JButton dismiss = new JButton("Close");
@@ -110,10 +113,6 @@ public class Warpy {
 		g.clearRect(0,0, feedWidth, feedHeight);
 		currentFrame = dflt;
 		return dflt;
-	}
-	
-	private void saveScreenshot() {
-		
 	}
 
 }
