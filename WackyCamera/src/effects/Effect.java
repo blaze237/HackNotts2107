@@ -1,7 +1,9 @@
 package effects;
 
+import WarpApp.Image;
+
 public interface Effect
 {
-	public abstract int[][] apply(int[][] pixels);
-	
+	public abstract Image apply(Image img);
+
 }
