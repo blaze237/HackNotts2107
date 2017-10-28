@@ -11,6 +11,10 @@ import WarpApp.ImageWarper;
 import effects.warps.CircleWarp;
 import effects.warps.Effect_Warp;
 import effects.warps.WarpModifier;
+import effects.simple.Effect_Blue;
+import effects.simple.Effect_Grayscale;
+import effects.simple.Effect_Red;
+import effects.simple.Effect_Sepia;
 
 public class Main {
 

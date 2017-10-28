@@ -3,7 +3,7 @@ package effects.simple;
 import effects.Effect;
 import util.Image;
 
-public class Sepia implements Effect
+public class Effect_Sepia implements Effect
 {
 
 	@Override
@@ -20,15 +20,11 @@ public class Sepia implements Effect
 			    int blue = p & 0xff;
 
 
-			    int red2 = (int) ((red * .393) + (green *.769) + (blue * .189));
-			    int green2 = (int) ((red * .349) + (green *.686) + (blue * .168));
-			    int blue2 =  (int) ((red * .272) + (green *.534) + (blue * .131));
+			    int red2 = Math.min(255, (int) ((red * .393) + (green *.769) + (blue * .189)));
+			    int green2 = Math.min(255, (int) ((red * .349) + (green *.686) + (blue * .168)));
+			    int blue2 =  Math.min(255, (int) ((red * .272) + (green *.534) + (blue * .131)));
 
-			    float boost = 1.5f;
 
-			    red2 = (int) Math.min(255, red2*boost);
-			    green2 = (int) Math.min(255, green2*boost);
-			    blue2 = (int)Math.min(255, blue2*boost);
 
 			    img.pixels[c][r] =  (red2<<16) | (green2<<8) | blue2;
 			}
