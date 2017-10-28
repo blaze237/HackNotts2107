@@ -35,14 +35,12 @@ public class Main {
 			    //get blue
 			    int blue = p & 0xff;
 
+			    //Get greyscale
 			    int avg = (red+green+blue)/3;
 
 			    p = (255<<24) | (avg<<16) | (avg<<8) | avg;
 
-
 			    img.setRGB(c, r, p);
-
-
 
 			}
 		}

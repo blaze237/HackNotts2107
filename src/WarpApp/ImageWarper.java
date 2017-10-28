@@ -46,13 +46,12 @@ public class ImageWarper  implements WebcamImageTransformer {
 		new ImageWarper();
 	}
 
+
 	private BufferedImage toGrayscale(BufferedImage img)
 	{
 		int width = img.getWidth();
 		int height = img.getHeight();
-
 		int[][] pixels = scanner.getPixels(img);
-
 
 		for(int r = 0; r < height; r++)
 		{
@@ -60,21 +59,40 @@ public class ImageWarper  implements WebcamImageTransformer {
 			{
 				int p = pixels[c][r];
 
-				//get red
 			    int red = (p>>16) & 0xff;
-
-			    //get green
 			    int green = (p>>8) & 0xff;
-
-			    //get blue
 			    int blue = p & 0xff;
-
 			    int avg = (red+green+blue)/3;
-
-
 
 			    p = (255<<24) | (avg<<16) | (avg<<8) | avg;
 
+			    img.setRGB(c, r, p);
+
+			}
+		}
+
+		return img;
+	}
+
+
+	private BufferedImage Blur(BufferedImage img)
+	{
+		int width = img.getWidth();
+		int height = img.getHeight();
+		int[][] pixels = scanner.getPixels(img);
+
+		for(int r = 0; r < height; r++)
+		{
+			for(int c = 0; c < width; c++)
+			{
+				int p = pixels[c][r];
+
+			    int red = (p>>16) & 0xff;
+			    int green = (p>>8) & 0xff;
+			    int blue = p & 0xff;
+			    int avg = (red+green+blue)/3;
+
+			    p = (255<<24) | (avg<<16) | (avg<<8) | avg;
 
 			    img.setRGB(c, r, p);
 
