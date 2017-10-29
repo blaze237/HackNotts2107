@@ -135,7 +135,7 @@ public class View {
 		});
 
 		WebcamPanel panel = new WebcamPanel(webcam);
-		panel.setFPSDisplayed(true);
+		panel.setFPSDisplayed(false);
 		panel.setFillArea(true);
 
 
