@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -164,12 +165,14 @@ public class View {
 	}
 
 	protected void loadEffectConfig() {
-		// TODO Auto-generated method stub
-		
+
+        JFileChooser openFile = new JFileChooser(System.getProperty("user.dir") + "/Presets");
+        openFile.showOpenDialog(null);
 	}
 
 	protected void saveEffectConfig() {
-		// TODO Auto-generated method stub
+        JFileChooser saveFile = new JFileChooser(System.getProperty("user.dir") + "/Presets");
+        saveFile.showSaveDialog(null);
 		
 	}
 
