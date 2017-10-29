@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -200,6 +201,10 @@ public class View {
 
 	protected void loadEffectConfig()
 	{
+
+		JFileChooser openFile = new JFileChooser(System.getProperty("user.dir") + "/Presets");
+        openFile.showOpenDialog(null);
+
 		clearAll();
 
 		Effect e = null;
@@ -216,10 +221,7 @@ public class View {
 					break;
 
 				activeEffects.add(new ActiveEffect(activeEffects, new EffectPair(e.name, e), warper));
-				//window.pack();
 				window.validate();
-
-
 			}
 
 			in.close();
@@ -234,11 +236,13 @@ public class View {
 			i.printStackTrace();
 			return;
 		}
-
 	}
 
 	protected void saveEffectConfig()
 	{
+		JFileChooser saveFile = new JFileChooser(System.getProperty("user.dir") + "/Presets");
+        saveFile.showSaveDialog(null);
+
 		try
 		{
 			FileOutputStream fileOut = new FileOutputStream("CustomSave.ser");
@@ -261,8 +265,6 @@ public class View {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
-
 	}
 
 	private String[] getEffects() {
