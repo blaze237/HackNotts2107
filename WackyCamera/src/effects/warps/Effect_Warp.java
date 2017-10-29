@@ -4,13 +4,19 @@ import util.Color;
 import util.Image;
 import util.Point;
 
-public class Effect_Warp implements Effect {
+public class Effect_Warp extends Effect {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -1509928892012762028L;
 	private WarpModifier mod;
 
 	public Effect_Warp(WarpModifier mod) {
 		this.mod = mod;
 	}
+
+
 
 	@Override
 	public Image apply(Image img) {

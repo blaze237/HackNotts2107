@@ -3,9 +3,13 @@ package effects.warps;
 import util.Point;
 import util.UnitVec;
 
-public class Tunnel_Modifier implements WarpModifier
+public class Tunnel_Modifier extends WarpModifier
 {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -1017622362792738225L;
 	private Point cent;
 	private double rad;
 

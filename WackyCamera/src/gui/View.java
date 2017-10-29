@@ -10,6 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,13 +30,21 @@ import com.github.sarxos.webcam.WebcamResolution;
 
 import WarpApp.ImageScanner;
 import WarpApp.ImageWarper;
-import effects.Effect_Abberation;
+import effects.Effect;
+import effects.Effect_Blur;
 import effects.Effect_Laplacian;
+import effects.simple.Effect_Abberation;
 import effects.simple.Effect_Grayscale;
+import effects.simple.Effect_Negative;
+import effects.simple.Effect_Red;
 import effects.simple.Effect_Step;
+import effects.simple.Effect_Threshold;
 import effects.warps.CircleWarp;
 import effects.warps.Effect_Warp;
+import effects.warps.Mirror_Modifier;
+import effects.warps.Swirl_Modifier;
 import effects.warps.Tunnel_Modifier;
+import util.Point;
 import util.ScreenshotFileHandler;
 
 public class View {
@@ -51,6 +64,9 @@ public class View {
 	private int feedWidth = 800;
 	private int feedHeight = 800;
 
+
+
+
 	public View() {}
 
 	public void InitGui() {
@@ -58,24 +74,50 @@ public class View {
 		ImageScanner scanner = ImageScanner.getInstance();
 
 		Dimension camSize = WebcamResolution.VGA.getSize();
+		int cx = camSize.width / 2;
+		int cy = camSize.height / 2;
+		int minSize = Math.min(camSize.width, camSize.height);
 
 		ImageWarper warper = new ImageWarper(scanner);
 
 
+//		warper.addEffect(new Effect_Warp(new Circle_Modifier(cx, cy, minSize / 2.1)));
+//		warper.addEffect(new Effect_Warp(new Swirl_Modifier(cx, cy, minSize / 2.1, Math.toRadians(2000))));
+//		warper.addEffect(new Effect_Warp(new Mirror_Modifier(camSize.width / 2, Mirror_Modifier.VERTICAL)));
+//		warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
+//
+//		warper.addEffect(new Effect_Blur());
+//		warper.addEffect(new Effect_Step(32));
+//		warper.addEffect(new Effect_Laplacian(true));
+//		warper.addEffect(new Effect_Sepia());
+//		warper.addEffect(new Effect_Abberation(5,Effect_Abberation.ONE_WAY_ABBERATION));
+//
+//		warper.saveEffects("newSave.ser");
+
+		//warper.addEffect(new Effect_Warp( new Swirl_Modifier(cx,cy, minSize / 5, 6)));
+
+		//warper.addEffect(new Effect_Grayscale());
+		//warper.addEffect(new Effect_Red());
+		//warper.addEffect(new Effect_Threshold(0.3));
+		//warper.addEffect(new Effect_Negative());
+		//warper.addEffect(new Effect_Red());
 
 
-		warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
-		//warper.addEffect(new Effect_Abberation());
+
+		//warper.addEffect(new Effect_Warp(new Mirror_Modifier(camSize.width / 2, Mirror_Modifier.VERTICAL)));
+		//warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
+
+		//warper.addEffect(new Effect_Abberation(5,Effect_Abberation.ONE_WAY_ABBERATION));
+
+		warper.saveEffects("newSave.ser");
+
+		warper.loadEffects("newSave.ser");
+
+
+
 
 		//warper.addEffect(new Effect_Warp(new CircleWarp(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1)));
 		//warper.addEffect(new Effect_Blur());
-
-		//warper.addEffect(new Effect_Blur());
-		//warper.addEffect(new Effect_Blur());
-		//warper.addEffect(new Effect_Blur());
-
-
-
 
 
 

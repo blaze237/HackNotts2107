@@ -3,8 +3,13 @@ package effects;
 import util.Color;
 import util.Image;
 
-public class Effect_Blur implements Effect
+public class Effect_Blur extends Effect
 {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -3248893176216510415L;
 
 	private static final double[] GAUSSIAN = {
 			0.020407, 0.020408, 0.020408, 0.020408, 0.020408, 0.020408, 0.020407,

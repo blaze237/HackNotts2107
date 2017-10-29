@@ -2,7 +2,12 @@ package effects;
 
 import util.Image;
 
-public abstract class SimpleEffect implements Effect {
+public abstract class SimpleEffect extends Effect {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 7284094282570011639L;
 
 	@Override
 	public Image apply(Image img) {

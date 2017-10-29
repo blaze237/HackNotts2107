@@ -5,8 +5,13 @@ import util.Image;
 
 
 
-public class Effect_Laplacian implements Effect
+public class Effect_Laplacian extends Effect
 {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 700425981410505670L;
 
 	private static final int[] LAPLACIAN_SEPERATE =  {1, 1, 1,
 													  1, -8, 1,
@@ -16,7 +21,7 @@ public class Effect_Laplacian implements Effect
 													 -1, 9, -1,
 													 -1, -1, -1 };
 
-	private static int[] LAPLACIAN;
+	private int[] LAPLACIAN;
 
 	public Effect_Laplacian(boolean addImage) {
 		LAPLACIAN = (addImage ? LAPLACIAN_JOINT : LAPLACIAN_SEPERATE);
