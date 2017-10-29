@@ -8,7 +8,6 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 public class ScreenshotFileHandler {
-
 	public static boolean saveImage(BufferedImage screenshot) {
 		Random r = new Random(System.currentTimeMillis());
 		int fileNum = r.nextInt(100000);

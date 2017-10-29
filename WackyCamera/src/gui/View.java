@@ -30,7 +30,6 @@ import com.github.sarxos.webcam.WebcamResolution;
 import WarpApp.ImageScanner;
 import WarpApp.ImageWarper;
 import effects.Effect;
-import effects.simple.Effect_Abberation;
 import util.DropdownPair;
 import util.EffectPair;
 import util.ScreenshotFileHandler;
@@ -105,11 +104,6 @@ public class View {
 		JPanel addEffect = new JPanel(new FlowLayout());
 
 		JComboBox<String> selectEffects = new JComboBox<>(getEffects());
-		selectEffects.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//actually add the effect to the list of active ones
-			}
-		});
 
 		JButton addEffectButton = new JButton("+");
 		addEffectButton.addActionListener(new ActionListener() {
@@ -145,9 +139,26 @@ public class View {
 			}
 		});
 
+		JButton saveConfig = new JButton("Save Effect Configuration");
+		saveConfig.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveEffectConfig();
+			}
+		});
+		JButton loadConfig = new JButton("Load Effect Configuration");
+		loadConfig.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loadEffectConfig();
+			}
+		});
+
 		addEffect.add(selectEffects);
 		addEffect.add(addEffectButton);
 		toolbar.add(saveImage);
+		toolbar.add(saveConfig);
+		toolbar.add(loadConfig);
 		effects.add(addEffect, BorderLayout.SOUTH);
 		effects.add(scrollPane, BorderLayout.CENTER);
 		window.add(toolbar, BorderLayout.NORTH);
@@ -156,6 +167,16 @@ public class View {
 
 		window.pack();
 		window.setVisible(true);
+	}
+
+	protected void loadEffectConfig() {
+		// TODO Auto-generated method stub
+
+	}
+
+	protected void saveEffectConfig() {
+		// TODO Auto-generated method stub
+
 	}
 
 	private String[] getEffects() {

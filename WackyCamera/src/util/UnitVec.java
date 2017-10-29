@@ -13,6 +13,7 @@ public class UnitVec {
 			this.normalize();
 	}
 
+
 	//Getters
 	public double dx() { return dx; }
 	public double dy() { return dy; }
