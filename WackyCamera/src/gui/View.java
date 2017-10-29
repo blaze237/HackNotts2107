@@ -202,13 +202,15 @@ public class View {
 	protected void loadEffectConfig()
 	{
 
-		JFileChooser openFile = new JFileChooser(System.getProperty("user.dir") + "/Presets");
-        openFile.showOpenDialog(null);
+		JFileChooser openFile = new JFileChooser(System.getProperty("user.dir") + "/presets");
+        int ret = openFile.showOpenDialog(null);
+        if (ret != JFileChooser.APPROVE_OPTION)
+        	return;
+
+        String fName = openFile.getSelectedFile().getPath();
 
 		clearAll();
-
 		Effect e = null;
-		String fName = "CustomSave.ser";
 
 		try
 		{
@@ -240,12 +242,16 @@ public class View {
 
 	protected void saveEffectConfig()
 	{
-		JFileChooser saveFile = new JFileChooser(System.getProperty("user.dir") + "/Presets");
-        saveFile.showSaveDialog(null);
+		JFileChooser saveFile = new JFileChooser(System.getProperty("user.dir") + "/presets");
+        int ret = saveFile.showSaveDialog(null);
+        if (ret != JFileChooser.APPROVE_OPTION)
+        	return;
+
+        String fName = saveFile.getSelectedFile().getPath();
 
 		try
 		{
-			FileOutputStream fileOut = new FileOutputStream("CustomSave.ser");
+			FileOutputStream fileOut = new FileOutputStream(fName);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
 			for (Component c : activeEffects.getComponents()) {
