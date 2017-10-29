@@ -7,15 +7,11 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,6 +19,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
@@ -30,31 +27,15 @@ import com.github.sarxos.webcam.WebcamResolution;
 
 import WarpApp.ImageScanner;
 import WarpApp.ImageWarper;
-import effects.Effect;
-import effects.Effect_Blur;
-import effects.Effect_Laplacian;
-import effects.simple.Effect_Abberation;
-import effects.simple.Effect_Grayscale;
-import effects.simple.Effect_Negative;
-import effects.simple.Effect_Red;
-import effects.simple.Effect_Step;
-import effects.simple.Effect_Threshold;
-import effects.warps.CircleWarp;
 import effects.warps.Effect_Warp;
-import effects.warps.Mirror_Modifier;
-import effects.warps.Swirl_Modifier;
 import effects.warps.Tunnel_Modifier;
-import util.Point;
+import util.EffectPair;
 import util.ScreenshotFileHandler;
 
 public class View {
 
-	private String effectOptions[] = {"Blur", "Wobble", "Dog"};
-
-	private JComboBox effects;
 	private String currentEffect;
 	private JButton saveImage;
-	//private ImagePanel feed;
 
 	private Boolean isFeedLoaded = false;
 
@@ -63,9 +44,8 @@ public class View {
 
 	private int feedWidth = 800;
 	private int feedHeight = 800;
-
-
-
+	
+	private List<EffectPair> activeEffectsList;
 
 	public View() {}
 
@@ -74,51 +54,25 @@ public class View {
 		ImageScanner scanner = ImageScanner.getInstance();
 
 		Dimension camSize = WebcamResolution.VGA.getSize();
-		int cx = camSize.width / 2;
-		int cy = camSize.height / 2;
-		int minSize = Math.min(camSize.width, camSize.height);
 
 		ImageWarper warper = new ImageWarper(scanner);
 
-
-//		warper.addEffect(new Effect_Warp(new Circle_Modifier(cx, cy, minSize / 2.1)));
-//		warper.addEffect(new Effect_Warp(new Swirl_Modifier(cx, cy, minSize / 2.1, Math.toRadians(2000))));
-//		warper.addEffect(new Effect_Warp(new Mirror_Modifier(camSize.width / 2, Mirror_Modifier.VERTICAL)));
-//		warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
-//
-//		warper.addEffect(new Effect_Blur());
-//		warper.addEffect(new Effect_Step(32));
-//		warper.addEffect(new Effect_Laplacian(true));
-//		warper.addEffect(new Effect_Sepia());
-//		warper.addEffect(new Effect_Abberation(5,Effect_Abberation.ONE_WAY_ABBERATION));
-//
-//		warper.saveEffects("newSave.ser");
-
-		//warper.addEffect(new Effect_Warp( new Swirl_Modifier(cx,cy, minSize / 5, 6)));
-
-		//warper.addEffect(new Effect_Grayscale());
-		//warper.addEffect(new Effect_Red());
-		//warper.addEffect(new Effect_Threshold(0.3));
-		//warper.addEffect(new Effect_Negative());
-		//warper.addEffect(new Effect_Red());
+		
 
 
-
-		//warper.addEffect(new Effect_Warp(new Mirror_Modifier(camSize.width / 2, Mirror_Modifier.VERTICAL)));
-		//warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
-
-		//warper.addEffect(new Effect_Abberation(5,Effect_Abberation.ONE_WAY_ABBERATION));
-
-		warper.saveEffects("newSave.ser");
-
-		warper.loadEffects("newSave.ser");
-
-
-
+		warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
+		//warper.addEffect(new Effect_Abberation());
 
 		//warper.addEffect(new Effect_Warp(new CircleWarp(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1)));
 		//warper.addEffect(new Effect_Blur());
 
+		//warper.addEffect(new Effect_Blur());
+		//warper.addEffect(new Effect_Blur());
+		//warper.addEffect(new Effect_Blur());
+
+
+
+		
 
 
 
@@ -126,8 +80,6 @@ public class View {
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
 		webcam.setImageTransformer(warper);
 		webcam.open();
-
-
 
 		JFrame window = new JFrame("Warpy");
 		window.setLayout(new BorderLayout());
@@ -137,24 +89,37 @@ public class View {
 		JPanel toolbar = new JPanel();
 		toolbar.setLayout(new FlowLayout());
 
-		String[] effectsList = effectOptions;
-
-		effects = new JComboBox<>(effectsList);
-		currentEffect = effectOptions[0];
-		effects.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					onEffectSelected((String)effects.getSelectedItem());
-				}
+		JPanel effects = new JPanel();
+		effects.setLayout(new BorderLayout());
+		
+		
+		activeEffectsList = new ArrayList<EffectPair>();
+		JPanel activeEffects = new JPanel();
+		activeEffects.setLayout(new BoxLayout(activeEffects, BoxLayout.Y_AXIS));
+		JScrollPane activeEffectsContainer = new JScrollPane(activeEffects, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		
+		JPanel addEffect = new JPanel(new FlowLayout());
+		
+		JComboBox selectEffects = new JComboBox(getEffects());
+		selectEffects.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//actually add the effect to the list of active ones
 			}
 		});
-
+		JButton addEffectButton = new JButton("+");
+		addEffectButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tag = selectEffects.getSelectedItem().toString();
+				activeEffectsList.add(new EffectPair(tag, null));
+				activeEffects.add(new ActiveEffect(tag, activeEffects, activeEffectsList));
+				window.pack();
+			}
+		});
 
 		WebcamPanel panel = new WebcamPanel(webcam);
 		panel.setFPSDisplayed(true);
 		panel.setFillArea(true);
 
-		window.add(panel);
 
 
 		saveImage = new JButton("Take Screenshot");
@@ -164,36 +129,26 @@ public class View {
 			}
 		});
 
-		toolbar.add(effects);
+		addEffect.add(selectEffects);
+		addEffect.add(addEffectButton);
 		toolbar.add(saveImage);
+		effects.add(addEffect, BorderLayout.SOUTH);
+		effects.add(activeEffects, BorderLayout.CENTER);
 		window.add(toolbar, BorderLayout.NORTH);
-		//window.add(feed, BorderLayout.CENTER);
+		window.add(effects, BorderLayout.EAST);
+		window.add(panel);
 
 		window.pack();
 		window.setVisible(true);
 	}
 
-	protected void onEffectSelected(String newSelection) {
-		if (newSelection == currentEffect)
-			return;
-
-		for (int i = 0; i < effectOptions.length - 1; ++i) {
-			if (effectOptions[i] == newSelection) {
-				setEffect();
-				break;
-			}
-		}
-	}
-
-	private void setEffect() {
-
+	private String[] getEffects() {
+		return new String[] {"Blur", "static", "flip"};
 	}
 
 	private void onTakeScreenshot() {
 		
 		BufferedImage im = webcam.getImage();
-		
-		
 		
 		JDialog dialog = new JDialog();
 		dialog.setResizable(false);
