@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -13,7 +12,6 @@ import javax.swing.JPanel;
 import WarpApp.ImageWarper;
 import util.EffectPair;
 
-
 public class ActiveEffect extends JPanel {
 
 	/**
@@ -21,10 +19,12 @@ public class ActiveEffect extends JPanel {
 	 */
 	private static final long serialVersionUID = -5137557233888379187L;
 
+	public EffectPair myEffect;
+
 	public ActiveEffect(JPanel parent, EffectPair effect, ImageWarper warper) {
 		super();
+		myEffect = effect;
 
-		setAlignmentX(Component.RIGHT_ALIGNMENT);
 		setLayout(new FlowLayout());
 		this.setMaximumSize(new Dimension(999, 40));
 		JLabel effectTag = new JLabel(effect.getLabel());
@@ -45,4 +45,6 @@ public class ActiveEffect extends JPanel {
 
 		warper.addEffect(effect.getEffect());
 	}
+
+
 }

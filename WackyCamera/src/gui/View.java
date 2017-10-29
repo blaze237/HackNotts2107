@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -8,8 +9,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.EOFException;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,12 +41,15 @@ import util.ScreenshotFileHandler;
 public class View {
 
 	private JButton saveImage;
+	private JPanel activeEffects;
+	private JFrame window;
 
 	private Webcam webcam;
 
 	private List<DropdownPair> dropdownEffects;
 
 	private ImageWarper warper;
+
 
 	public View() {}
 
@@ -86,7 +93,7 @@ public class View {
 		webcam.setImageTransformer(warper);
 		webcam.open();
 
-		JFrame window = new JFrame("Warpy");
+		window = new JFrame("Warpy");
 		window.setLayout(new BorderLayout());
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(true);
@@ -97,7 +104,7 @@ public class View {
 		JPanel effects = new JPanel();
 		effects.setLayout(new BorderLayout());
 
-		JPanel activeEffects = new JPanel();
+		activeEffects = new JPanel();
 		activeEffects.setLayout(new BoxLayout(activeEffects, BoxLayout.PAGE_AXIS));
 		JScrollPane scrollPane = new JScrollPane(activeEffects);
 
@@ -154,11 +161,20 @@ public class View {
 			}
 		});
 
+		JButton clearAll = new JButton("Clear Effects");
+		clearAll.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clearAll();
+			}
+		});
+
 		addEffect.add(selectEffects);
 		addEffect.add(addEffectButton);
 		toolbar.add(saveImage);
 		toolbar.add(saveConfig);
 		toolbar.add(loadConfig);
+		toolbar.add(clearAll);
 		effects.add(addEffect, BorderLayout.SOUTH);
 		effects.add(scrollPane, BorderLayout.CENTER);
 		window.add(toolbar, BorderLayout.NORTH);
@@ -169,13 +185,83 @@ public class View {
 		window.setVisible(true);
 	}
 
-	protected void loadEffectConfig() {
-		// TODO Auto-generated method stub
+	private void clearAll()
+	{
+		for (Component c : activeEffects.getComponents()) {
+			ActiveEffect ae = (ActiveEffect) c;
+			warper.removeEffect(ae.myEffect.getEffect());
+		}
+
+		activeEffects.removeAll();
+
+		activeEffects.validate();
+		activeEffects.repaint(50L);
+	}
+
+	protected void loadEffectConfig()
+	{
+		clearAll();
+
+		Effect e = null;
+		String fName = "CustomSave.ser";
+
+		try
+		{
+			FileInputStream fileIn = new FileInputStream(fName);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			while(true)
+			{
+				e = (Effect) in.readObject();
+				if(e == null)
+					break;
+
+				activeEffects.add(new ActiveEffect(activeEffects, new EffectPair(e.name, e), warper));
+				//window.pack();
+				window.validate();
+
+
+			}
+
+			in.close();
+			fileIn.close();
+		}
+		catch(EOFException error)
+		{
+			return;
+		}
+		catch (Exception i)
+		{
+			i.printStackTrace();
+			return;
+		}
 
 	}
 
-	protected void saveEffectConfig() {
-		// TODO Auto-generated method stub
+	protected void saveEffectConfig()
+	{
+		try
+		{
+			FileOutputStream fileOut = new FileOutputStream("CustomSave.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
+			for (Component c : activeEffects.getComponents()) {
+				ActiveEffect ae = (ActiveEffect) c;
+				Effect e = ae.myEffect.getEffect();
+				e.name = ae.myEffect.getLabel();
+
+				out.writeObject(e);
+			}
+
+
+
+	        out.close();
+	        fileOut.close();
+
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 
 	}
 
