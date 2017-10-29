@@ -99,6 +99,7 @@ public class View {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(true);
 
+
 		JPanel toolbar = new JPanel();
 		toolbar.setLayout(new FlowLayout());
 
@@ -183,6 +184,10 @@ public class View {
 		window.add(panel);
 
 		window.pack();
+		Dimension current = window.getSize();
+		window.setSize((int)(current.width*1.5), (int)(current.height*1.5));
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		window.setLocation(dim.width/7, 100);
 		window.setVisible(true);
 	}
 
