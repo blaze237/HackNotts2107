@@ -2,8 +2,13 @@ package effects.simple;
 import effects.Effect;
 import util.Image;
 
-public class Effect_Negative implements Effect
+public class Effect_Negative extends Effect
 {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 7789060934684290315L;
 
 	@Override
 	public Image apply(Image img)

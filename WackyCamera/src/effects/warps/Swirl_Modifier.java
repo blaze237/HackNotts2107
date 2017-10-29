@@ -3,8 +3,12 @@ package effects.warps;
 import util.Point;
 import util.UnitVec;
 
-public class Swirl_Modifier  implements WarpModifier
+public class Swirl_Modifier  extends WarpModifier
 {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -6511306899818649043L;
 	private double maxAngle;
 	private double radius;
 	private Point center;

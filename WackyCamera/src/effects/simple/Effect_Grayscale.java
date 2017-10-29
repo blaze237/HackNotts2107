@@ -5,6 +5,11 @@ import util.Color;
 
 public class Effect_Grayscale extends SimpleEffect
 {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 7954060143952581094L;
+
 	@Override
 	protected int applyPerPixel(int x, int y, int color) {
 	    int red = Color.getColor(color, Color.RED);

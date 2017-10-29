@@ -1,6 +1,11 @@
 package WarpApp;
 
 import java.awt.image.BufferedImage;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import com.github.sarxos.webcam.WebcamImageTransformer;
@@ -58,6 +63,56 @@ public class ImageWarper  implements WebcamImageTransformer {
 		}
 
 		return image;
+
+	}
+
+	public void loadEffects(String fName)
+	{
+		Effect e = null;
+
+		effects.clear();
+
+		try
+		{
+			FileInputStream fileIn = new FileInputStream(fName);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			while(true)
+			{
+				e = (Effect) in.readObject();
+				if(e == null)
+				break;
+				addEffect(e);
+			}
+
+			in.close();
+			fileIn.close();
+		}
+		catch(EOFException error)
+		{
+			return;
+		}
+		catch (Exception i)
+		{
+			i.printStackTrace();
+			return;
+		}
+	}
+
+	public void saveEffects(String fName)
+	{
+		try
+		{
+			FileOutputStream fileOut = new FileOutputStream(fName);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			for (Effect e : effects)
+				out.writeObject(e);
+	        out.close();
+	        fileOut.close();
+
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 	}
 }

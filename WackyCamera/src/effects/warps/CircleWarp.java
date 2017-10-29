@@ -3,8 +3,12 @@ package effects.warps;
 import util.Point;
 import util.UnitVec;
 
-public class CircleWarp implements WarpModifier {
+public class CircleWarp extends WarpModifier {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -66959928199368292L;
 	Point center;
 	double radius;
 

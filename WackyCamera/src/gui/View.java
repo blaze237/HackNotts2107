@@ -13,6 +13,11 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,7 +33,7 @@ import com.github.sarxos.webcam.WebcamResolution;
 
 import WarpApp.ImageScanner;
 import WarpApp.ImageWarper;
-import effects.Effect_Blur;
+import effects.Effect;
 import effects.Effect_Laplacian;
 import effects.simple.Effect_Abberation;
 import effects.simple.Effect_Grayscale;
@@ -57,6 +62,9 @@ public class View {
 	private int feedWidth = 800;
 	private int feedHeight = 800;
 
+
+
+
 	public View() {}
 
 	public void InitGui() {
@@ -72,22 +80,25 @@ public class View {
 
 
 
-		//warper.addEffect(new Effect_Warp(new Swirl_Modifier(cx, cy, minSize / 2.1, Math.toRadians(80))));
-		//warper.addEffect(new Effect_Abberation());
-		warper.addEffect(new Effect_Blur());
-		warper.addEffect(new Effect_Step(32));
-		warper.addEffect(new Effect_Laplacian(true));
-		warper.addEffect(new Effect_Grayscale());
+		warper.addEffect(new Effect_Warp( new Swirl_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1, 6)));
 
-		//warper.addEffect(new Effect_Warp(new CircleWarp(cx, cy, minSize / 2.1)));
+
+
+
+		//warper.addEffect(new Effect_Warp(new Mirror_Modifier(camSize.width / 2, Mirror_Modifier.VERTICAL)));
+		//warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
+
+		//warper.addEffect(new Effect_Abberation(5,Effect_Abberation.ONE_WAY_ABBERATION));
+
+		//warper.saveEffects("newSave.ser");
+
+		//warper.loadEffects("newSave.ser");
+
+
+
+
+		//warper.addEffect(new Effect_Warp(new CircleWarp(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1)));
 		//warper.addEffect(new Effect_Blur());
-
-		//warper.addEffect(new Effect_Blur());
-		//warper.addEffect(new Effect_Blur());
-		//warper.addEffect(new Effect_Blur());
-
-
-
 
 
 

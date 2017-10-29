@@ -4,8 +4,12 @@ import effects.Effect;
 import util.Color;
 import util.Image;
 
-public class Effect_Abberation implements Effect
+public class Effect_Abberation extends Effect
 {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -962229356025762746L;
 	public static final boolean TWO_WAY_ABBERATION = true;
 	public static final boolean ONE_WAY_ABBERATION = false;
 

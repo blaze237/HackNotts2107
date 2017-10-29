@@ -2,8 +2,12 @@ package effects.warps;
 
 import util.Point;
 
-public class Mirror_Modifier  implements WarpModifier
+public class Mirror_Modifier  extends WarpModifier
 {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 3052966504400038243L;
 	public static final boolean HORIZONTAL = false;
 	public static final boolean VERTICAL = true;
 

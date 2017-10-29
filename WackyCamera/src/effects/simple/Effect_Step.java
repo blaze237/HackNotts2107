@@ -5,6 +5,10 @@ import util.Color;
 
 public class Effect_Step extends SimpleEffect {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 4179678440849912008L;
 	private int steps;
 
 	public Effect_Step(int steps) {

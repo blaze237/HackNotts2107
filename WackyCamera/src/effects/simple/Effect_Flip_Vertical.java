@@ -3,8 +3,13 @@ package effects.simple;
 import effects.Effect;
 import util.Image;
 
-public class Effect_Flip_Vertical implements Effect
+public class Effect_Flip_Vertical extends Effect
 {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -909206085958102985L;
+
 	@Override
 	public Image apply(Image img)
 	{

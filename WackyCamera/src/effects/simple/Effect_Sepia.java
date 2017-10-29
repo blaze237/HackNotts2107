@@ -5,6 +5,11 @@ import util.Color;
 
 public class Effect_Sepia extends SimpleEffect
 {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -715839409089462896L;
+
 	@Override
 	protected int applyPerPixel(int x, int y, int color) {
 		int red = Color.getColor(color, Color.RED);
