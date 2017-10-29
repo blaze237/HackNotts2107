@@ -6,10 +6,23 @@ import util.Image;
 
 public class Effect_Abberation implements Effect
 {
+	public static final boolean TWO_WAY_ABBERATION = true;
+	public static final boolean ONE_WAY_ABBERATION = false;
 
-	private int abberation = 15;
+	private int abberationH;
+	private int abberationV;
 
 
+	public Effect_Abberation(int abberation, boolean twoWay)
+	{
+		this.abberationH = abberation;
+
+		if(twoWay = TWO_WAY_ABBERATION)
+			abberationV = abberation;
+		else
+			abberationV = 0;
+
+	}
 
 	@Override
 	public Image apply(Image img)
@@ -20,17 +33,17 @@ public class Effect_Abberation implements Effect
 		int pixelCopy[][] = new int[img.width][img.height];
 
 
-		for(int r = abberation; r < img.height - abberation - 1; r++)
+		for(int r = abberationV; r < img.height - abberationV - 1; r++)
 		{
-			for(int c = abberation; c < img.width - abberation - 1; c++)
+			for(int c = abberationH; c < img.width - abberationH - 1; c++)
 			{
 
 				int[] rgb = new int[Color.COUNT];
 
 
-				rgb[0] += Color.getColor(img.pixels[c -abberation][r], Color.RED);
+				rgb[0] += Color.getColor(img.pixels[c -abberationH][r - abberationV], Color.RED);
 				rgb[1] += Color.getColor(img.pixels[c ][r], Color.GREEN);
-				rgb[2] += Color.getColor(img.pixels[c + abberation][r], Color.BLUE);
+				rgb[2] += Color.getColor(img.pixels[c + abberationH][r - abberationV], Color.BLUE);
 
 				pixelCopy[c][r] = Color.makeColor(rgb[Color.RED], rgb[Color.GREEN], rgb[Color.BLUE]);
 

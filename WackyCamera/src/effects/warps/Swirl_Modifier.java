@@ -24,8 +24,8 @@ public class Swirl_Modifier  implements WarpModifier
 
 		double dist = Point.dist(p, center);
 
-		if(dist > radius)
-			return p;
+		//if(dist > radius)
+		//	return p;
 
 
 		double angOff = angularOffset(dist);
