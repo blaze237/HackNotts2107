@@ -8,7 +8,7 @@ import javax.swing.JFileChooser;
 
 public class ScreenshotFileHandler {
 	public static boolean saveImage(BufferedImage screenshot) {
-		JFileChooser saveFile = new JFileChooser(System.getProperty("user.dir") + "/Screenshots/");
+		JFileChooser saveFile = new JFileChooser(System.getProperty("user.dir") + "/screenshots/");
         int ret = saveFile.showSaveDialog(null);
         if (ret != JFileChooser.APPROVE_OPTION)
         	return false;
