@@ -80,7 +80,7 @@ public class View {
 
 
 
-		warper.addEffect(new Effect_Warp( new Swirl_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1, 6)));
+		warper.addEffect(new Effect_Warp( new Swirl_Modifier(cx,cy, minSize / 5, 6)));
 
 
 
