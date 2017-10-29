@@ -62,9 +62,6 @@ public class View {
 
 		warper = new ImageWarper(scanner);
 
-		
-
-
 		//warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
 		//warper.addEffect(new Effect_Abberation(10, Effect_Abberation.ONE_WAY_ABBERATION));
 
@@ -77,10 +74,7 @@ public class View {
 
 
 		//warper.saveEffects("test.ser");
-		
-
-
-
+	
 		webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
 		webcam.setImageTransformer(warper);
@@ -166,9 +160,9 @@ public class View {
 	}
 
 	private void onTakeScreenshot() {
-		
+
 		BufferedImage im = webcam.getImage();
-		
+
 		JDialog dialog = new JDialog();
 		dialog.setResizable(false);
 

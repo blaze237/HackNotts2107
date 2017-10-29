@@ -7,6 +7,10 @@ import util.Image;
 public class Effect_Threshold extends Effect
 {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 3039423378240377769L;
 	private double thresh;
 
 	public Effect_Threshold(double thresh)
@@ -17,13 +21,14 @@ public class Effect_Threshold extends Effect
 	@Override
 	public Image apply(Image img)
 	{
-		//Find max value
+
 		int maxRGB[] = new int[Color.COUNT];
 
 		for(int r = 0; r < img.height ; r++)
 		{
 			for(int c = 0; c < img.width ; c++)
 			{
+				//Check for new max at each point in each colour channel
 				for(int i = 0; i < Color.COUNT; ++i)
 				{
 					maxRGB[i] = Math.max(maxRGB[i], Color.getColor(img.pixels[c][r],i));
@@ -48,10 +53,5 @@ public class Effect_Threshold extends Effect
 
 		return img;
 
-
 	}
-
-
-
-
 }

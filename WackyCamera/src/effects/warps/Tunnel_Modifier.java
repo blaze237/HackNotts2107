@@ -22,14 +22,17 @@ public class Tunnel_Modifier extends WarpModifier
 	@Override
 	public Point translate(double x, double y)
 	{
+		//Get dist to centre of circlr
 		Point p = new Point(x,y);
 		double dist = Point.dist(cent, p);
 
 		if(dist <= rad)
 			return p;
 
+		//Get unit vector from point to center
 		UnitVec direction = new UnitVec(p.x - cent.x , p.y - cent.y);
 
+		//Spread radial pixels out from the boundary
 		return cent.translate(direction,rad);
 
 	}

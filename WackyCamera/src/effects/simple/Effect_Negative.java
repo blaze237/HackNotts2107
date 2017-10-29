@@ -1,8 +1,8 @@
 package effects.simple;
-import effects.Effect;
-import util.Image;
+import effects.SimpleEffect;
+import util.Color;
 
-public class Effect_Negative extends Effect
+public class Effect_Negative  extends SimpleEffect
 {
 
 	/**
@@ -10,27 +10,15 @@ public class Effect_Negative extends Effect
 	 */
 	private static final long serialVersionUID = 7789060934684290315L;
 
+
 	@Override
-	public Image apply(Image img)
+	protected int applyPerPixel(int x, int y, int color)
 	{
-		for(int r = 0; r < img.height; r++)
-		{
-			for(int c = 0; c < img.width; c++)
-			{
-				int p = img.pixels[c][r];
+		int red = 255 - Color.getColor(color, Color.RED);
+		int green = 255 - Color.getColor(color, Color.GREEN);
+		int blue = 255 - Color.getColor(color, Color.BLUE);
 
-			    int red =  255 - ((p>>16) & 0xff);
-			    int green = 255 - ((p>>8) & 0xff);
-			    int blue = 255 - (p & 0xff);
-
-
-			    img.pixels[c][r] = (red<<16) | (green<<8) | blue;
-
-			}
-		}
-
-		return img;
-
+		return Color.makeColor(red, green, blue);
 	}
 
 }
