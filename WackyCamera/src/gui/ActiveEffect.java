@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,7 @@ public class ActiveEffect extends JPanel {
 	public ActiveEffect(JPanel parent, EffectPair effect, ImageWarper warper) {
 		super();
 		
+		setAlignmentX(Component.RIGHT_ALIGNMENT);
 		setLayout(new FlowLayout());
 		this.setMaximumSize(new Dimension(999, 40));
 		JLabel effectTag = new JLabel(effect.getLabel());
