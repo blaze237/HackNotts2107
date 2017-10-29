@@ -8,6 +8,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,41 +29,44 @@ import com.github.sarxos.webcam.WebcamResolution;
 
 import WarpApp.ImageScanner;
 import WarpApp.ImageWarper;
-import effects.warps.Effect_Warp;
-import effects.warps.Tunnel_Modifier;
+import effects.Effect;
+import util.DropdownPair;
 import util.EffectPair;
 import util.ScreenshotFileHandler;
 
 public class View {
 
-	private String currentEffect;
 	private JButton saveImage;
 
-	private Boolean isFeedLoaded = false;
-
 	private Webcam webcam;
-	private BufferedImage currentFrame;
-
-	private int feedWidth = 800;
-	private int feedHeight = 800;
 	
-	private List<EffectPair> activeEffectsList;
+	private List<DropdownPair> dropdownEffects;
 
+	private ImageWarper warper;
+	
 	public View() {}
 
 	public void InitGui() {
 
+		//Create array
+		dropdownEffects = new ArrayList<>();
+		
+		//Add add-able effects
+		dropdownEffects.add(new DropdownPair("Test", "Test.ser"));
+		
+		
+		
 		ImageScanner scanner = ImageScanner.getInstance();
 
 		Dimension camSize = WebcamResolution.VGA.getSize();
 
-		ImageWarper warper = new ImageWarper(scanner);
+		warper = new ImageWarper(scanner);
 
 		
 
 
-		warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
-		//warper.addEffect(new Effect_Abberation());
+		//warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
+		//warper.addEffect(new Effect_Abberation(10, Effect_Abberation.ONE_WAY_ABBERATION));
 
 		//warper.addEffect(new Effect_Warp(new CircleWarp(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1)));
 		//warper.addEffect(new Effect_Blur());
@@ -71,7 +76,7 @@ public class View {
 		//warper.addEffect(new Effect_Blur());
 
 
-
+		//warper.saveEffects("test.ser");
 		
 
 
@@ -92,27 +97,37 @@ public class View {
 		JPanel effects = new JPanel();
 		effects.setLayout(new BorderLayout());
 		
-		
-		activeEffectsList = new ArrayList<EffectPair>();
 		JPanel activeEffects = new JPanel();
-		activeEffects.setLayout(new BoxLayout(activeEffects, BoxLayout.Y_AXIS));
-		JScrollPane activeEffectsContainer = new JScrollPane(activeEffects, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		activeEffects.setLayout(new BoxLayout(activeEffects, BoxLayout.PAGE_AXIS));
+		JScrollPane scrollPane = new JScrollPane(activeEffects);
 		
 		JPanel addEffect = new JPanel(new FlowLayout());
 		
-		JComboBox selectEffects = new JComboBox(getEffects());
+		JComboBox<String> selectEffects = new JComboBox<>(getEffects());
 		selectEffects.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//actually add the effect to the list of active ones
 			}
 		});
+		
 		JButton addEffectButton = new JButton("+");
 		addEffectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String tag = selectEffects.getSelectedItem().toString();
-				activeEffectsList.add(new EffectPair(tag, null));
-				activeEffects.add(new ActiveEffect(tag, activeEffects, activeEffectsList));
-				window.pack();
+				String filepath = "";
+				for (DropdownPair p : dropdownEffects) {
+					if (tag == p.getLabel()) {
+						filepath = p.getFilepath();
+						break;
+					}
+				}
+				if (filepath == "")
+					return;
+				
+				Effect newEffect = loadEffect(filepath);
+				activeEffects.add(new ActiveEffect(activeEffects, new EffectPair(tag, newEffect), warper));
+				//window.pack();
+				window.validate();
 			}
 		});
 
@@ -133,7 +148,7 @@ public class View {
 		addEffect.add(addEffectButton);
 		toolbar.add(saveImage);
 		effects.add(addEffect, BorderLayout.SOUTH);
-		effects.add(activeEffects, BorderLayout.CENTER);
+		effects.add(scrollPane, BorderLayout.CENTER);
 		window.add(toolbar, BorderLayout.NORTH);
 		window.add(effects, BorderLayout.EAST);
 		window.add(panel);
@@ -143,7 +158,11 @@ public class View {
 	}
 
 	private String[] getEffects() {
-		return new String[] {"Blur", "static", "flip"};
+		String[] s = new String[dropdownEffects.size()];
+		for (int i = 0; i < dropdownEffects.size(); ++i)
+			s[i] = dropdownEffects.get(i).getLabel();
+		
+		return s;
 	}
 
 	private void onTakeScreenshot() {
@@ -185,9 +204,23 @@ public class View {
 		dialog.pack();
 		dialog.setVisible(true);
 	}
-
-	public void updateFeed(BufferedImage frame) {
-		currentFrame = frame;
+	
+	private Effect loadEffect(String filepath) {
+		Effect e = null;
+		try
+		{
+			FileInputStream fileIn = new FileInputStream(filepath);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			e = (Effect) in.readObject();
+			in.close();
+			fileIn.close();
+		}
+		catch (Exception i)
+		{
+			i.printStackTrace();
+			return null;
+		}
+		return e;
 	}
 
 }

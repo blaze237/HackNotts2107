@@ -5,11 +5,11 @@ import effects.Effect;
 public class EffectPair {
 
 	private String label;
-	private Effect instance;
+	private Effect e;
 	
-	public EffectPair(String label, Effect instance) {
+	public EffectPair(String label, Effect e) {
 		this.label = label;
-		this.instance = instance;
+		this.e = e;
 	}
 	
 	public String getLabel() {
@@ -17,6 +17,6 @@ public class EffectPair {
 	}
 	
 	public Effect getEffect() {
-		return instance;
+		return e;
 	}
 }
