@@ -2,6 +2,7 @@ package util;
 
 import java.awt.image.BufferedImage;
 import java.io.EOFException;
+import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
@@ -13,11 +14,11 @@ public class ScreenshotFileHandler {
         if (ret != JFileChooser.APPROVE_OPTION)
         	return false;
 
-        String fName = saveFile.getSelectedFile().getPath();
+        String filepath = saveFile.getSelectedFile().getPath() + ".png";
 
 		try
 		{
-			ImageIO.write(screenshot, "png", saveFile.getSelectedFile());
+			ImageIO.write(screenshot, "png", new File(filepath));
 			return true;
 		}
 		catch(EOFException error)
