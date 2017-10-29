@@ -9,6 +9,7 @@ public class Swirl_Modifier  extends WarpModifier
 	 *
 	 */
 	private static final long serialVersionUID = -6511306899818649043L;
+
 	private double maxAngle;
 	private double radius;
 	private Point center;
@@ -18,7 +19,7 @@ public class Swirl_Modifier  extends WarpModifier
 	{
 		this.center = new Point(x,y);
 		this.radius = rad;
-		maxAngle = angle;
+		this.maxAngle = angle;
 	}
 
 	@Override
@@ -28,8 +29,8 @@ public class Swirl_Modifier  extends WarpModifier
 
 		double dist = Point.dist(p, center);
 
-		//if(dist > radius)
-		//	return p;
+		if(dist > radius)
+			return p;
 
 
 		double angOff = angularOffset(dist);
@@ -37,9 +38,6 @@ public class Swirl_Modifier  extends WarpModifier
 		direction = direction.rotate(angOff);
 
 		return center.translate(direction,dist);
-
-
-
 	}
 
 	private double angularOffset(double dist)

@@ -3,7 +3,7 @@ package effects.warps;
 import util.Point;
 import util.UnitVec;
 
-public class CircleWarp extends WarpModifier {
+public class Circle_Modifier extends WarpModifier {
 
 	/**
 	 *
@@ -12,7 +12,7 @@ public class CircleWarp extends WarpModifier {
 	Point center;
 	double radius;
 
-	public CircleWarp(int cx, int cy, double radius) {
+	public Circle_Modifier(int cx, int cy, double radius) {
 		this.center = new Point(cx, cy);
 		this.radius = radius;
 	}

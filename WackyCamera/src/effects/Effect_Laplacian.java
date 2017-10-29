@@ -21,7 +21,7 @@ public class Effect_Laplacian extends Effect
 													 -1, 9, -1,
 													 -1, -1, -1 };
 
-	private static int[] LAPLACIAN;
+	private int[] LAPLACIAN;
 
 	public Effect_Laplacian(boolean addImage) {
 		LAPLACIAN = (addImage ? LAPLACIAN_JOINT : LAPLACIAN_SEPERATE);
