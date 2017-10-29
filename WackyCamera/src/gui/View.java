@@ -28,6 +28,7 @@ import com.github.sarxos.webcam.WebcamResolution;
 
 import WarpApp.ImageScanner;
 import WarpApp.ImageWarper;
+import effects.Effect_Blur;
 import effects.Effect_Laplacian;
 import effects.simple.Effect_Abberation;
 import effects.simple.Effect_Grayscale;
@@ -37,6 +38,7 @@ import effects.warps.Effect_Warp;
 import effects.warps.Mirror_Modifier;
 import effects.warps.Swirl_Modifier;
 import effects.warps.Tunnel_Modifier;
+import util.Point;
 import util.ScreenshotFileHandler;
 
 public class View {
@@ -62,17 +64,22 @@ public class View {
 		ImageScanner scanner = ImageScanner.getInstance();
 
 		Dimension camSize = WebcamResolution.VGA.getSize();
+		int cx = camSize.width / 2;
+		int cy = camSize.height / 2;
+		int minSize = Math.min(camSize.width, camSize.height);
 
 		ImageWarper warper = new ImageWarper(scanner);
 
 
 
-		warper.addEffect(new Effect_Warp( new Swirl_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1, 6)));
-		//warper.addEffect(new Effect_Warp(new Mirror_Modifier(camSize.width / 2, Mirror_Modifier.VERTICAL)));
-		//warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
+		//warper.addEffect(new Effect_Warp(new Swirl_Modifier(cx, cy, minSize / 2.1, Math.toRadians(80))));
 		//warper.addEffect(new Effect_Abberation());
+		warper.addEffect(new Effect_Blur());
+		warper.addEffect(new Effect_Step(32));
+		warper.addEffect(new Effect_Laplacian(true));
+		warper.addEffect(new Effect_Grayscale());
 
-		//warper.addEffect(new Effect_Warp(new CircleWarp(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1)));
+		//warper.addEffect(new Effect_Warp(new CircleWarp(cx, cy, minSize / 2.1)));
 		//warper.addEffect(new Effect_Blur());
 
 		//warper.addEffect(new Effect_Blur());
