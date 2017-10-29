@@ -27,6 +27,18 @@ import com.github.sarxos.webcam.WebcamResolution;
 
 import WarpApp.ImageScanner;
 import WarpApp.ImageWarper;
+<<<<<<< Updated upstream
+=======
+import effects.Effect;
+import effects.Effect_Blur;
+import effects.Effect_Laplacian;
+import effects.simple.Effect_Abberation;
+import effects.simple.Effect_Grayscale;
+import effects.simple.Effect_Negative;
+import effects.simple.Effect_Red;
+import effects.simple.Effect_Step;
+import effects.simple.Effect_Threshold;
+>>>>>>> Stashed changes
 import effects.warps.Effect_Warp;
 import effects.warps.Tunnel_Modifier;
 import util.EffectPair;
@@ -57,8 +69,42 @@ public class View {
 
 		ImageWarper warper = new ImageWarper(scanner);
 
+<<<<<<< Updated upstream
 		
 
+=======
+		//warper.addEffect(new Effect_Grayscale());
+		//warper.addEffect(new Effect_Blur());
+		//warper.addEffect(new Effect_Warp(new Swirl_Modifier(cx, cy, minSize / 2.1, Math.toRadians(120))));
+		//warper.addEffect(new Effect_Laplacian(false));
+
+
+//		warper.addEffect(new Effect_Warp(new Circle_Modifier(cx, cy, minSize / 2.1)));
+//		warper.addEffect(new Effect_Warp(new Swirl_Modifier(cx, cy, minSize / 2.1, Math.toRadians(2000))));
+//		warper.addEffect(new Effect_Warp(new Mirror_Modifier(camSize.width / 2, Mirror_Modifier.VERTICAL)));
+		//warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
+//
+//		warper.addEffect(new Effect_Blur());
+//		warper.addEffect(new Effect_Step(32));
+//		warper.addEffect(new Effect_Laplacian(true));
+//		warper.addEffect(new Effect_Sepia());
+		warper.addEffect(new Effect_Abberation(5,Effect_Abberation.ONE_WAY_ABBERATION));
+//
+//		warper.saveEffects("newSave.ser");
+
+		//warper.addEffect(new Effect_Warp( new Swirl_Modifier(cx,cy, minSize / 5, 6)));
+
+		//warper.addEffect(new Effect_Grayscale());
+		//warper.addEffect(new Effect_Red());
+		//warper.addEffect(new Effect_Threshold(0.3));
+		//warper.addEffect(new Effect_Negative());
+		//warper.addEffect(new Effect_Red());
+
+
+
+		//warper.addEffect(new Effect_Warp(new Mirror_Modifier(camSize.width / 2, Mirror_Modifier.VERTICAL)));
+		//warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
+>>>>>>> Stashed changes
 
 		warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
 		//warper.addEffect(new Effect_Abberation());
