@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 import com.github.sarxos.webcam.WebcamImageTransformer;
 
@@ -32,10 +33,15 @@ public class ImageWarper  implements WebcamImageTransformer {
 		//Get image in our format
 		Image image = scanner.getImage(img);
 
-		//Apply all effects to the image
-		for (Effect e : effects)
-		{
-			image = e.apply(image);
+		//No problem if concurrent mod
+		try {
+			//Apply all effects to the image
+			for (Effect e : effects)
+			{
+				image = e.apply(image);
+			}
+		} catch (ConcurrentModificationException e) {
+			return toBuffImg(image);
 		}
 
 		//Return their format
