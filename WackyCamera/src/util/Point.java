@@ -10,6 +10,7 @@ public class Point implements java.io.Serializable {
 		this.y = y;
 	}
 
+
 	//Translate by a unit vector
 	public Point translate(UnitVec v) { return translate(v, 1.0); }
 	public Point translate(UnitVec v, double dist) { return new Point(x + v.dx() * dist, y + v.dy() * dist); }

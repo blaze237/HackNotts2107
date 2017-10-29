@@ -17,6 +17,7 @@ public class Effect_Laplacian extends Effect
 													  1, -8, 1,
 													  1, 1, 1 };
 
+
 	private static final int[] LAPLACIAN_JOINT = 	{-1, -1, -1,
 													 -1, 9, -1,
 													 -1, -1, -1 };

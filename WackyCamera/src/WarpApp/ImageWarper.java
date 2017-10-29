@@ -27,6 +27,7 @@ public class ImageWarper  implements WebcamImageTransformer {
 		this.effects = new ArrayList<>();
 	}
 
+
 	@Override
 	public BufferedImage transform(BufferedImage img)
 	{

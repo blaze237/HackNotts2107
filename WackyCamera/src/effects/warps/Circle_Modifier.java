@@ -12,6 +12,7 @@ public class Circle_Modifier extends WarpModifier {
 	Point center;
 	double radius;
 
+
 	public Circle_Modifier(int cx, int cy, double radius) {
 		this.center = new Point(cx, cy);
 		this.radius = radius;
