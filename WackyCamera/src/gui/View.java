@@ -30,6 +30,17 @@ import com.github.sarxos.webcam.WebcamResolution;
 import WarpApp.ImageScanner;
 import WarpApp.ImageWarper;
 import effects.Effect;
+import effects.simple.Effect_Green;
+import effects.simple.Effect_Negative;
+import effects.simple.Effect_Red;
+import effects.simple.Effect_Sepia;
+import effects.simple.Effect_Step;
+import effects.simple.Effect_Threshold;
+import effects.warps.Circle_Modifier;
+import effects.warps.Effect_Warp;
+import effects.warps.Mirror_Modifier;
+import effects.warps.Swirl_Modifier;
+import effects.warps.Tunnel_Modifier;
 import util.DropdownPair;
 import util.EffectPair;
 import util.ScreenshotFileHandler;
@@ -39,42 +50,40 @@ public class View {
 	private JButton saveImage;
 
 	private Webcam webcam;
-	
+
 	private List<DropdownPair> dropdownEffects;
 
 	private ImageWarper warper;
-	
+
 	public View() {}
 
 	public void InitGui() {
 
 		//Create array
 		dropdownEffects = new ArrayList<>();
-		
+
 		//Add add-able effects
-		dropdownEffects.add(new DropdownPair("Test", "Test.ser"));
-		
-		
-		
+		dropdownEffects.add(new DropdownPair("Tunnel", "filters/tunnel.ser"));
+		dropdownEffects.add(new DropdownPair("Circle", "filters/circle.ser"));
+		dropdownEffects.add(new DropdownPair("Swirl", "filters/swirl.ser"));
+		dropdownEffects.add(new DropdownPair("H Mirror", "filters/h_mirror.ser"));
+		dropdownEffects.add(new DropdownPair("V Mirror", "filters/v_mirror.ser"));
+
+		dropdownEffects.add(new DropdownPair("Red", "filters/red.ser"));
+		dropdownEffects.add(new DropdownPair("Green", "filters/green.ser"));
+		//dropdownEffects.add(new DropdownPair("Blue", "filters/blue.ser"));
+		dropdownEffects.add(new DropdownPair("Sepia", "filters/sepia.ser"));
+		dropdownEffects.add(new DropdownPair("Negative", "filters/negative.ser"));
+		dropdownEffects.add(new DropdownPair("Step 16", "filters/step16.ser"));
+		dropdownEffects.add(new DropdownPair("Step 32", "filters/step32.ser"));
+		dropdownEffects.add(new DropdownPair("Step 64", "filters/step64.ser"));
+		dropdownEffects.add(new DropdownPair("thresh 1/4", "filters/thresh-1-4.ser"));
+		dropdownEffects.add(new DropdownPair("thresh 1/2", "filters/thresh-2-4.ser"));
+		dropdownEffects.add(new DropdownPair("thresh 3/4", "filters/thresh-3-4.ser"));
+
 		ImageScanner scanner = ImageScanner.getInstance();
-
-		Dimension camSize = WebcamResolution.VGA.getSize();
-
 		warper = new ImageWarper(scanner);
 
-		//warper.addEffect(new Effect_Warp(new Tunnel_Modifier(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 5)));
-		//warper.addEffect(new Effect_Abberation(10, Effect_Abberation.ONE_WAY_ABBERATION));
-
-		//warper.addEffect(new Effect_Warp(new CircleWarp(camSize.width / 2, camSize.height / 2, Math.min(camSize.width, camSize.height) / 2.1)));
-		//warper.addEffect(new Effect_Blur());
-
-		//warper.addEffect(new Effect_Blur());
-		//warper.addEffect(new Effect_Blur());
-		//warper.addEffect(new Effect_Blur());
-
-
-		//warper.saveEffects("test.ser");
-	
 		webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
 		webcam.setImageTransformer(warper);
@@ -90,20 +99,20 @@ public class View {
 
 		JPanel effects = new JPanel();
 		effects.setLayout(new BorderLayout());
-		
+
 		JPanel activeEffects = new JPanel();
 		activeEffects.setLayout(new BoxLayout(activeEffects, BoxLayout.PAGE_AXIS));
 		JScrollPane scrollPane = new JScrollPane(activeEffects);
-		
+
 		JPanel addEffect = new JPanel(new FlowLayout());
-		
+
 		JComboBox<String> selectEffects = new JComboBox<>(getEffects());
 		selectEffects.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//actually add the effect to the list of active ones
 			}
 		});
-		
+
 		JButton addEffectButton = new JButton("+");
 		addEffectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -117,7 +126,7 @@ public class View {
 				}
 				if (filepath == "")
 					return;
-				
+
 				Effect newEffect = loadEffect(filepath);
 				activeEffects.add(new ActiveEffect(activeEffects, new EffectPair(tag, newEffect), warper));
 				//window.pack();
@@ -155,7 +164,7 @@ public class View {
 		String[] s = new String[dropdownEffects.size()];
 		for (int i = 0; i < dropdownEffects.size(); ++i)
 			s[i] = dropdownEffects.get(i).getLabel();
-		
+
 		return s;
 	}
 
@@ -198,7 +207,7 @@ public class View {
 		dialog.pack();
 		dialog.setVisible(true);
 	}
-	
+
 	private Effect loadEffect(String filepath) {
 		Effect e = null;
 		try
