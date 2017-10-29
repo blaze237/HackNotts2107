@@ -30,17 +30,7 @@ import com.github.sarxos.webcam.WebcamResolution;
 import WarpApp.ImageScanner;
 import WarpApp.ImageWarper;
 import effects.Effect;
-import effects.simple.Effect_Green;
-import effects.simple.Effect_Negative;
-import effects.simple.Effect_Red;
-import effects.simple.Effect_Sepia;
-import effects.simple.Effect_Step;
-import effects.simple.Effect_Threshold;
-import effects.warps.Circle_Modifier;
-import effects.warps.Effect_Warp;
-import effects.warps.Mirror_Modifier;
-import effects.warps.Swirl_Modifier;
-import effects.warps.Tunnel_Modifier;
+import effects.simple.Effect_Abberation;
 import util.DropdownPair;
 import util.EffectPair;
 import util.ScreenshotFileHandler;
@@ -69,9 +59,15 @@ public class View {
 		dropdownEffects.add(new DropdownPair("H Mirror", "filters/h_mirror.ser"));
 		dropdownEffects.add(new DropdownPair("V Mirror", "filters/v_mirror.ser"));
 
+		dropdownEffects.add(new DropdownPair("Blur", "filters/blur.ser"));
+		dropdownEffects.add(new DropdownPair("F Horiz", "filters/flipH.ser"));
+		dropdownEffects.add(new DropdownPair("F Vert", "filters/flipV.ser"));
+		dropdownEffects.add(new DropdownPair("Abberant L", "filters/abber_l.ser"));
+		dropdownEffects.add(new DropdownPair("Abberant H", "filters/abber_h.ser"));
 		dropdownEffects.add(new DropdownPair("Red", "filters/red.ser"));
 		dropdownEffects.add(new DropdownPair("Green", "filters/green.ser"));
-		//dropdownEffects.add(new DropdownPair("Blue", "filters/blue.ser"));
+		dropdownEffects.add(new DropdownPair("Blue", "filters/blue.ser"));
+		dropdownEffects.add(new DropdownPair("Greyscale", "filters/gray.ser"));
 		dropdownEffects.add(new DropdownPair("Sepia", "filters/sepia.ser"));
 		dropdownEffects.add(new DropdownPair("Negative", "filters/negative.ser"));
 		dropdownEffects.add(new DropdownPair("Step 16", "filters/step16.ser"));
@@ -80,6 +76,8 @@ public class View {
 		dropdownEffects.add(new DropdownPair("thresh 1/4", "filters/thresh-1-4.ser"));
 		dropdownEffects.add(new DropdownPair("thresh 1/2", "filters/thresh-2-4.ser"));
 		dropdownEffects.add(new DropdownPair("thresh 3/4", "filters/thresh-3-4.ser"));
+		dropdownEffects.add(new DropdownPair("Laplacian", "filters/laplacian_f.ser"));
+		dropdownEffects.add(new DropdownPair("Laplacian (en)", "filters/laplacian_t.ser"));
 
 		ImageScanner scanner = ImageScanner.getInstance();
 		warper = new ImageWarper(scanner);
