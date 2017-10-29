@@ -30,7 +30,7 @@ public class ImageWarper  implements WebcamImageTransformer {
 	public BufferedImage transform(BufferedImage img)
 	{
 		//Get image in our format
-		Image image = scanner.getPixels(img);
+		Image image = scanner.getImage(img);
 
 		//Apply all effects to the image
 		for (Effect e : effects)

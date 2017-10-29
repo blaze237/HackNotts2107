@@ -44,7 +44,7 @@ public class Effect_Abberation extends Effect
 
 				int[] rgb = new int[Color.COUNT];
 
-
+				//Shift RGB colour channels
 				rgb[0] += Color.getColor(img.pixels[c -abberationH][r - abberationV], Color.RED);
 				rgb[1] += Color.getColor(img.pixels[c ][r], Color.GREEN);
 				rgb[2] += Color.getColor(img.pixels[c + abberationH][r - abberationV], Color.BLUE);

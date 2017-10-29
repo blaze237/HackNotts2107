@@ -13,6 +13,7 @@ public class ImageScanner
 
 	private static ImageScanner instance = null;
 
+	//Private to ensure singletons only
 	private ImageScanner(){
 
 	}
@@ -25,27 +26,8 @@ public class ImageScanner
 	}
 
 
-	public BufferedImage readImg(String s)
-	{
-		File f = null;
 
-		BufferedImage img = null;
-
-		try
-		{
-			f = new File(s);
-			img = ImageIO.read(f);
-		}
-		catch(IOException e)
-		{
-			System.out.println("Error" + e);
-
-		}
-
-		return img;
-	}
-
-	public Image getPixels(BufferedImage img)
+	public Image getImage(BufferedImage img)
 	{
 		int h = img.getHeight();
 		int w = img.getWidth();
@@ -61,12 +43,7 @@ public class ImageScanner
 				pixels[w-c][r] = (rast.getSample(c,r,0) << 16) | (rast.getSample(c,r,1) << 8) | rast.getSample(c,r,2);
 			}
 		}
-
 		return new Image(pixels,w,h);
-
 	}
-
-
-
 
 }
